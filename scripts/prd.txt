@@ -1,0 +1,1205 @@
+<rpg-method>
+# Repository Planning Graph (RPG) Method - Autonomous AI Revenue Engine
+# This document provides a structured, dependency-aware PRD using the RPG methodology
+
+## Core Principles
+1. **Dual-Semantics**: Functional capabilities (WHAT) mapped to structural code organization (HOW)
+2. **Explicit Dependencies**: Clear dependency chains preventing circular dependencies
+3. **Topological Order**: Foundation-first development with parallelizable tasks
+4. **Progressive Refinement**: Iterative development with testable milestones
+</rpg-method>
+
+---
+
+<overview>
+## Problem Statement
+
+Current B2B lead generation suffers from three critical inefficiencies:
+
+1. **Manual Prospecting Bottleneck**: Sales teams spend 40+ hours to generate 100 qualified leads, with 80-85% wasted effort on unqualified prospects
+2. **Generic Outreach Failure**: Cold emails achieve only 2-3% response rates due to lack of concrete value demonstration
+3. **Evidence Gap**: Sales conversations start with assumptions rather than specific, demonstrable problems the prospect is experiencing
+
+This results in poor ROI on sales efforts, missed opportunities, and inability to scale business development without proportional headcount increases.
+
+## Target Users
+
+**Primary Persona: Agency Owner/Sales Lead**
+- Digital marketing agencies (5-50 employees)
+- Web development agencies seeking new clients
+- SEO consultancies and performance marketing firms
+- Workflow: Manual prospecting → Cold outreach → Low conversion
+- Goal: Scale qualified lead generation without hiring more SDRs
+
+**Secondary Persona: SaaS Product Manager**
+- SaaS companies targeting SMB websites (optimization, analytics, marketing automation)
+- Workflow: Broad demographic targeting → Generic feature pitches
+- Goal: Identify prospects with demonstrated technical need for their solution
+
+## Success Metrics
+
+**Quantifiable Outcomes:**
+- Email response rate: 2-3% baseline → 8-12% target (300% improvement)
+- Lead qualification accuracy: 15-20% baseline → 60-75% target (4x improvement)
+- Time to generate 100 leads: 40+ hours → 2-3 hours (95% time reduction)
+- Meeting booking rate: 0.5-1% baseline → 3-5% target (400% improvement)
+- System processes 100+ websites per hour for technical analysis
+- 75% reduction in manual sales team effort for initial prospect engagement
+
+</overview>
+
+---
+
+<functional-decomposition>
+## Capability Tree
+
+### Capability: Lead Discovery
+Automated identification and extraction of business prospects from geographic and categorical search criteria, with intelligent filtering based on online presence quality indicators.
+
+#### Feature: Geographic Business Search
+- **Description**: Query Google Maps for businesses matching location and category criteria
+- **Inputs**: Search query (city/region/coordinates + radius), business category, rating thresholds
+- **Outputs**: List of business entities with basic metadata (name, location, rating, review count)
+- **Behavior**: Execute stealth browser automation using Puppeteer MCP, intercept network JSON responses (not HTML scraping), implement retry logic with exponential backoff, handle pagination for large result sets
+
+#### Feature: Business Data Extraction
+- **Description**: Extract detailed contact and online presence information from business listings
+- **Inputs**: Business entity from search results
+- **Outputs**: Structured business profile (name, address, phone, website URL, review metrics)
+- **Behavior**: Parse structured data from Maps API responses, validate URL formats, identify missing/broken website indicators, normalize phone numbers and addresses
+
+#### Feature: Prospect Qualification Filter
+- **Description**: Apply business rules to identify high-potential prospects based on technical debt indicators
+- **Inputs**: Business profile with website URL, qualification criteria (rating thresholds, presence indicators)
+- **Outputs**: Boolean qualification decision + qualification score + disqualification reasons
+- **Behavior**: Check for website presence, apply rating threshold filters, identify outdated online presence signals, score leads based on multiple quality indicators
+
+### Capability: Website Technical Audit
+Comprehensive automated website analysis generating performance metrics, accessibility compliance reports, and visual evidence of technical issues suitable for sales conversations.
+
+#### Feature: Performance Analysis
+- **Description**: Measure Core Web Vitals and calculate performance debt metrics
+- **Inputs**: Website URL, viewport configuration (desktop/mobile)
+- **Outputs**: Performance report (FCP, LCP, CLS scores), unused code percentage, load time metrics
+- **Behavior**: Execute Lighthouse CI audit, analyze CSS/JS coverage via Chrome DevTools Protocol, calculate performance debt as % of unused code, identify critical rendering path issues
+
+#### Feature: Accessibility Compliance Scan
+- **Description**: Detect WCAG violations and generate compliance risk assessment
+- **Inputs**: Website URL, WCAG compliance level (A, AA, AAA)
+- **Outputs**: Accessibility report with violation list, severity ratings, legal risk assessment
+- **Behavior**: Inspect accessibility tree via Chrome DevTools, flag missing alt text and ARIA labels, check color contrast ratios, identify unlabeled form elements, categorize violations by legal risk level
+
+#### Feature: Visual Evidence Capture
+- **Description**: Generate annotated screenshots and performance videos for sales messaging
+- **Inputs**: Website URL, identified issues, viewport dimensions
+- **Outputs**: Screenshot files, video recordings, annotated image files with issue highlights
+- **Behavior**: Set viewport to mobile (375px) for responsive testing, capture screenshots of broken layouts, record video of slow loading (>3 seconds), generate before/after comparison images, annotate screenshots with issue markers
+
+#### Feature: Mobile Responsiveness Analysis
+- **Description**: Test website layout across device viewports to identify responsive design failures
+- **Inputs**: Website URL, device viewport configurations
+- **Outputs**: Responsiveness score, layout shift screenshots, broken element list
+- **Behavior**: Test multiple viewport sizes (mobile, tablet, desktop), capture layout shifts and overflow issues, identify touch target sizing problems, screenshot horizontal scrolling issues
+
+### Capability: Lead Data Management
+Persistent storage and retrieval of lead profiles, audit results, and campaign status with support for analytics and relationship tracking.
+
+#### Feature: Lead Profile Storage
+- **Description**: Store structured lead data with full audit results and evidence links
+- **Inputs**: Business profile, audit results, evidence URLs, qualification scores
+- **Outputs**: Persisted lead record with unique identifier
+- **Behavior**: Validate schema before insert, store in PostgreSQL via Supabase MCP, index by geographic and categorical dimensions, maintain audit history timestamps
+
+#### Feature: Lead Status Tracking
+- **Description**: Track lead progression through outreach pipeline with status transitions
+- **Inputs**: Lead ID, status update (Pending/Contacted/Responded/Booked/Disqualified)
+- **Outputs**: Updated lead record with status history
+- **Behavior**: Enforce valid status transitions, timestamp all state changes, trigger webhook events on status changes, maintain audit log of all updates
+
+#### Feature: Evidence Asset Management
+- **Description**: Store and retrieve visual evidence files with lead associations
+- **Inputs**: Lead ID, evidence files (screenshots, videos, reports)
+- **Outputs**: Stored file URLs, retrieval endpoints
+- **Behavior**: Upload files to Supabase Storage, generate signed URLs with expiration, maintain foreign key relationships to lead records, implement cleanup for orphaned files
+
+#### Feature: Analytics Data Aggregation
+- **Description**: Generate summary statistics and trend analysis for lead performance
+- **Inputs**: Date range, filter criteria (status, category, location)
+- **Outputs**: Aggregated metrics (conversion rates, response rates, pipeline value)
+- **Behavior**: Execute PostgreSQL aggregate queries, calculate conversion funnel metrics, generate time-series data for trends, cache frequently accessed aggregations
+
+### Capability: Email Outreach Automation
+Dynamic email campaign generation leveraging audit findings for personalized, evidence-based sales messaging with delivery tracking and response monitoring.
+
+#### Feature: Dynamic Template Population
+- **Description**: Generate personalized email content from templates using audit findings
+- **Inputs**: Email template, lead profile, audit results, evidence URLs
+- **Outputs**: Rendered email HTML and plain text with personalized content
+- **Behavior**: Parse template variables, inject specific audit findings (performance scores, accessibility issues), embed visual evidence links, customize messaging by business category, apply tone adjustments based on issue severity
+
+#### Feature: Email Campaign Orchestration
+- **Description**: Manage multi-step email sequences with automated follow-up scheduling
+- **Inputs**: Lead list, campaign configuration (templates, timing, conditions)
+- **Outputs**: Scheduled email queue, campaign execution plan
+- **Behavior**: Schedule initial emails via Mailgun MCP, set follow-up triggers based on opens/clicks, implement delay sequences (e.g., 3 days, 7 days), halt sequences on reply detection, manage campaign capacity limits
+
+#### Feature: Delivery Analytics Tracking
+- **Description**: Monitor email delivery, engagement, and response metrics
+- **Inputs**: Campaign ID, email message IDs
+- **Outputs**: Engagement metrics (sent, delivered, opened, clicked, replied)
+- **Behavior**: Consume Mailgun webhook events, parse open/click tracking pixels, detect reply emails, update lead status on engagement, calculate campaign-level performance metrics
+
+#### Feature: Calendar Integration
+- **Description**: Enable meeting booking from email links with calendar availability checking
+- **Inputs**: Lead response, available time slots, meeting configuration
+- **Outputs**: Scheduled calendar event, confirmation email
+- **Behavior**: Query Google Calendar API for availability via MCP, generate booking links with time slot options, create calendar events on booking, send confirmation emails to both parties, handle timezone conversions
+
+### Capability: User Interface Dashboard
+React-based command and control interface for campaign management, lead review, and performance monitoring.
+
+#### Feature: Lead Management Interface
+- **Description**: Display and filter lead pipeline with bulk action capabilities
+- **Inputs**: User filters (status, category, date range), sort preferences
+- **Outputs**: Paginated lead list with preview cards
+- **Behavior**: Fetch leads from Supabase with filters, render lead cards with key metrics, support bulk selection and actions, implement infinite scroll pagination
+
+#### Feature: Audit Results Viewer
+- **Description**: Present technical audit findings in business-friendly format
+- **Inputs**: Lead ID, audit record ID
+- **Outputs**: Formatted audit report with visual evidence gallery
+- **Behavior**: Retrieve audit data and evidence URLs, render performance charts and metrics, display screenshot gallery with zoom capability, generate downloadable PDF reports
+
+#### Feature: Campaign Dashboard
+- **Description**: Monitor active campaigns with real-time performance metrics
+- **Inputs**: Campaign ID or date range filter
+- **Outputs**: Campaign performance dashboard with charts and metrics
+- **Behavior**: Fetch campaign analytics from database, render funnel conversion charts, display engagement time series, show top/bottom performing leads, calculate ROI projections
+
+#### Feature: Settings and Configuration
+- **Description**: Manage email templates, search criteria, and integration settings
+- **Inputs**: User configuration changes
+- **Outputs**: Persisted settings, validation feedback
+- **Behavior**: Store user preferences in database, validate email templates before save, test API credentials on integration setup, provide template variable documentation
+
+</functional-decomposition>
+
+---
+
+<structural-decomposition>
+## Repository Structure
+
+```
+autonomous-revenue-engine/
+├── src/
+│   ├── lead-discovery/          # Maps to: Lead Discovery capability
+│   │   ├── maps-scraper.ts      # Geographic Business Search
+│   │   ├── data-extractor.ts    # Business Data Extraction
+│   │   ├── qualifier.ts         # Prospect Qualification Filter
+│   │   └── index.ts             # Public exports
+│   │
+│   ├── audit-engine/            # Maps to: Website Technical Audit capability
+│   │   ├── performance.ts       # Performance Analysis
+│   │   ├── accessibility.ts     # Accessibility Compliance Scan
+│   │   ├── evidence.ts          # Visual Evidence Capture
+│   │   ├── responsive.ts        # Mobile Responsiveness Analysis
+│   │   └── index.ts
+│   │
+│   ├── data-layer/              # Maps to: Lead Data Management capability
+│   │   ├── lead-repository.ts   # Lead Profile Storage
+│   │   ├── status-tracker.ts    # Lead Status Tracking
+│   │   ├── evidence-store.ts    # Evidence Asset Management
+│   │   ├── analytics.ts         # Analytics Data Aggregation
+│   │   └── index.ts
+│   │
+│   ├── email-automation/        # Maps to: Email Outreach Automation capability
+│   │   ├── template-engine.ts   # Dynamic Template Population
+│   │   ├── campaign-manager.ts  # Email Campaign Orchestration
+│   │   ├── delivery-tracker.ts  # Delivery Analytics Tracking
+│   │   ├── calendar-integration.ts # Calendar Integration
+│   │   └── index.ts
+│   │
+│   ├── dashboard/               # Maps to: User Interface Dashboard capability
+│   │   ├── components/
+│   │   │   ├── LeadManagement.tsx    # Lead Management Interface
+│   │   │   ├── AuditViewer.tsx       # Audit Results Viewer
+│   │   │   ├── CampaignDashboard.tsx # Campaign Dashboard
+│   │   │   └── Settings.tsx          # Settings and Configuration
+│   │   ├── hooks/
+│   │   ├── contexts/
+│   │   └── index.tsx
+│   │
+│   ├── shared/                  # Foundation: Shared utilities
+│   │   ├── types/               # TypeScript type definitions
+│   │   ├── config/              # Configuration management
+│   │   ├── errors/              # Error handling utilities
+│   │   ├── validation/          # Input validation schemas
+│   │   └── index.ts
+│   │
+│   └── mcp-servers/             # Foundation: MCP integrations
+│       ├── puppeteer-client.ts  # Puppeteer MCP client wrapper
+│       ├── supabase-client.ts   # Supabase MCP client wrapper
+│       ├── mailgun-client.ts    # Mailgun MCP client wrapper
+│       ├── calendar-client.ts   # Google Calendar MCP client wrapper
+│       └── index.ts
+│
+├── tests/
+│   ├── unit/                    # Unit tests mirroring src structure
+│   ├── integration/             # Integration tests for MCP workflows
+│   └── e2e/                     # End-to-end user workflow tests
+│
+├── docs/
+│   ├── architecture.md
+│   ├── api-reference.md
+│   └── deployment.md
+│
+└── scripts/
+    ├── setup-mcp.sh             # MCP server configuration
+    └── seed-db.sh               # Database initialization
+```
+
+## Module Definitions
+
+### Module: shared
+- **Maps to capability**: Foundation utilities (cross-cutting concerns)
+- **Responsibility**: Provide type safety, configuration, error handling, and validation across all modules
+- **File structure**:
+  ```
+  shared/
+  ├── types/lead.ts           # Lead profile interfaces
+  ├── types/audit.ts          # Audit result interfaces
+  ├── types/campaign.ts       # Campaign configuration interfaces
+  ├── config/environment.ts   # Environment variable management
+  ├── config/constants.ts     # Application constants
+  ├── errors/base-error.ts    # Base error class
+  ├── errors/handlers.ts      # Global error handlers
+  ├── validation/schemas.ts   # Zod validation schemas
+  └── index.ts
+  ```
+- **Exports**:
+  - `LeadProfile` - TypeScript interface for lead data
+  - `AuditResult` - TypeScript interface for audit output
+  - `CampaignConfig` - TypeScript interface for campaign settings
+  - `AppConfig` - Configuration object with environment variables
+  - `AppError` - Base error class for custom exceptions
+  - `validateLeadProfile()` - Zod validator for lead data
+
+### Module: mcp-servers
+- **Maps to capability**: Foundation MCP integrations
+- **Responsibility**: Abstract MCP server connections with type-safe client wrappers
+- **File structure**:
+  ```
+  mcp-servers/
+  ├── puppeteer-client.ts     # @modelcontextprotocol/server-puppeteer wrapper
+  ├── supabase-client.ts      # @supabase/mcp-server-postgrest wrapper
+  ├── mailgun-client.ts       # @mailgun/mailgun-mcp-server wrapper
+  ├── calendar-client.ts      # @cocal/google-calendar-mcp wrapper
+  └── index.ts
+  ```
+- **Exports**:
+  - `PuppeteerClient` - Typed client for browser automation
+  - `SupabaseClient` - Typed client for database operations
+  - `MailgunClient` - Typed client for email delivery
+  - `CalendarClient` - Typed client for calendar operations
+
+### Module: lead-discovery
+- **Maps to capability**: Lead Discovery
+- **Responsibility**: Automate business prospect identification and qualification from geographic search
+- **File structure**: See repository structure above
+- **Exports**:
+  - `searchBusinesses(criteria)` - Execute Maps search
+  - `extractBusinessData(entity)` - Parse business profile
+  - `qualifyProspect(profile, rules)` - Apply qualification logic
+
+### Module: audit-engine
+- **Maps to capability**: Website Technical Audit
+- **Responsibility**: Generate technical performance and accessibility reports with visual evidence
+- **File structure**: See repository structure above
+- **Exports**:
+  - `analyzePerformance(url)` - Run Lighthouse audit
+  - `scanAccessibility(url)` - WCAG compliance check
+  - `captureEvidence(url, issues)` - Screenshot and video generation
+  - `analyzeResponsiveness(url)` - Multi-viewport testing
+
+### Module: data-layer
+- **Maps to capability**: Lead Data Management
+- **Responsibility**: Persist and retrieve all lead, audit, and campaign data with analytics
+- **File structure**: See repository structure above
+- **Exports**:
+  - `saveLead(profile, audit)` - Store lead with audit results
+  - `updateLeadStatus(id, status)` - Update pipeline status
+  - `storeEvidence(leadId, files)` - Upload evidence files
+  - `getAnalytics(filters)` - Retrieve aggregated metrics
+
+### Module: email-automation
+- **Maps to capability**: Email Outreach Automation
+- **Responsibility**: Generate and execute personalized email campaigns with tracking
+- **File structure**: See repository structure above
+- **Exports**:
+  - `renderEmail(template, lead, audit)` - Generate email content
+  - `executeCampaign(leads, config)` - Launch email sequence
+  - `trackDelivery(campaignId)` - Monitor engagement metrics
+  - `scheduleCalendar(lead, slots)` - Book meetings
+
+### Module: dashboard
+- **Maps to capability**: User Interface Dashboard
+- **Responsibility**: Provide React UI for all user interactions and monitoring
+- **File structure**: See repository structure above
+- **Exports**:
+  - React components exported via `index.tsx`
+  - Custom hooks for data fetching
+  - Context providers for global state
+
+</structural-decomposition>
+
+---
+
+<dependency-graph>
+## Dependency Chain
+
+### Foundation Layer (Phase 0)
+No dependencies - these provide core capabilities for all other modules.
+
+- **shared**: Provides types, configuration, error handling, and validation utilities used by all modules
+- **mcp-servers**: Provides typed MCP client abstractions for all external integrations
+
+### Data Infrastructure Layer (Phase 1)
+- **data-layer**: Depends on [shared, mcp-servers]
+  - Requires type definitions from shared for lead/audit schemas
+  - Requires SupabaseClient from mcp-servers for database operations
+  - Must exist before other modules can persist data
+
+### Lead Discovery Layer (Phase 2)
+- **lead-discovery**: Depends on [shared, mcp-servers, data-layer]
+  - Requires type definitions from shared for business profiles
+  - Requires PuppeteerClient from mcp-servers for Maps scraping
+  - Requires data-layer to persist discovered leads
+
+### Audit Execution Layer (Phase 3)
+- **audit-engine**: Depends on [shared, mcp-servers, data-layer]
+  - Requires type definitions from shared for audit results
+  - Requires PuppeteerClient from mcp-servers for website auditing
+  - Requires data-layer to store audit results and evidence files
+  - Can be developed in parallel with lead-discovery
+
+### Campaign Automation Layer (Phase 4)
+- **email-automation**: Depends on [shared, mcp-servers, data-layer, audit-engine]
+  - Requires type definitions from shared for campaign configurations
+  - Requires MailgunClient and CalendarClient from mcp-servers
+  - Requires data-layer to retrieve leads and store campaign status
+  - Requires audit-engine to access audit findings for email content
+
+### Presentation Layer (Phase 5)
+- **dashboard**: Depends on [shared, data-layer, lead-discovery, audit-engine, email-automation]
+  - Requires type definitions from shared for all data interfaces
+  - Requires data-layer for all CRUD operations
+  - Requires lead-discovery for initiating searches
+  - Requires audit-engine for displaying audit results
+  - Requires email-automation for campaign management
+
+</dependency-graph>
+
+---
+
+<implementation-roadmap>
+## Development Phases
+
+### Phase 0: Foundation Setup
+**Goal**: Establish type-safe foundation with MCP integration layer and development environment
+
+**Entry Criteria**: Clean repository with package.json initialized
+
+**Tasks**:
+- [ ] Initialize TypeScript project with strict configuration (depends on: none)
+  - Acceptance criteria: tsconfig.json with strict mode, path aliases configured
+  - Test strategy: Project compiles without errors
+
+- [ ] Define core TypeScript interfaces (depends on: none)
+  - Acceptance criteria: LeadProfile, AuditResult, CampaignConfig interfaces complete
+  - Test strategy: Type tests verify interface contracts
+
+- [ ] Implement configuration management (depends on: none)
+  - Acceptance criteria: Environment variables loaded via dotenv, validation on startup
+  - Test strategy: Unit tests for config loading with missing/invalid values
+
+- [ ] Create error handling utilities (depends on: none)
+  - Acceptance criteria: AppError base class, typed error constructors for common cases
+  - Test strategy: Unit tests verify error message formatting and stack traces
+
+- [ ] Implement Zod validation schemas (depends on: core interfaces)
+  - Acceptance criteria: Validators for all major data structures
+  - Test strategy: Unit tests with valid/invalid inputs
+
+- [ ] Setup MCP client wrappers (depends on: config, error handling)
+  - Acceptance criteria: Type-safe clients for Puppeteer, Supabase, Mailgun, Calendar
+  - Test strategy: Integration tests verify MCP server connectivity
+
+- [ ] Configure Supabase database schema (depends on: none)
+  - Acceptance criteria: Tables for leads, audits, campaigns, evidence with proper indexes
+  - Test strategy: Schema migrations run successfully, seed data inserted
+
+**Exit Criteria**:
+- All modules can import from shared without errors
+- MCP clients successfully connect to configured servers
+- Database schema deployed and accessible
+
+**Delivers**: Foundation that all other modules can build upon with type safety and error handling
+
+---
+
+### Phase 1: Data Infrastructure
+**Goal**: Create persistent data layer with full CRUD operations for leads, audits, and campaigns
+
+**Entry Criteria**: Phase 0 complete with working MCP clients and database schema
+
+**Tasks**:
+- [ ] Implement lead repository (depends on: [shared, mcp-servers, database schema])
+  - Acceptance criteria: saveLead(), getLeadById(), updateLead(), searchLeads() functions
+  - Test strategy: Integration tests with real Supabase instance, test data isolation
+
+- [ ] Build status tracking system (depends on: [lead repository])
+  - Acceptance criteria: updateLeadStatus() with valid state transitions enforced
+  - Test strategy: Unit tests for state machine logic, integration tests for persistence
+
+- [ ] Create evidence storage module (depends on: [shared, mcp-servers])
+  - Acceptance criteria: storeEvidence() uploads to Supabase Storage, returns signed URLs
+  - Test strategy: Integration tests upload/retrieve files, test URL expiration
+
+- [ ] Implement analytics aggregation (depends on: [lead repository])
+  - Acceptance criteria: getAnalytics() returns conversion rates, funnel metrics, trends
+  - Test strategy: Integration tests with known dataset verify calculations
+
+**Exit Criteria**:
+- Full CRUD operations work for all entities
+- Analytics queries return accurate metrics
+- Evidence files upload and retrieve successfully
+
+**Delivers**: Complete data persistence layer ready for lead discovery and audit modules
+
+---
+
+### Phase 2: Lead Discovery Engine
+**Goal**: Automated business discovery from Google Maps with qualification filtering
+
+**Entry Criteria**: Phase 1 complete with working data layer
+
+**Tasks**:
+- [ ] Build Maps scraper with Puppeteer MCP (depends on: [shared, mcp-servers])
+  - Acceptance criteria: searchBusinesses() returns business entities from Maps JSON responses
+  - Test strategy: Integration tests with real Maps searches, verify network interception
+
+- [ ] Implement data extraction pipeline (depends on: [Maps scraper])
+  - Acceptance criteria: extractBusinessData() parses all required fields (name, address, phone, website, ratings)
+  - Test strategy: Unit tests with mock Maps responses, integration tests with real data
+
+- [ ] Create prospect qualifier (depends on: [data extraction, shared])
+  - Acceptance criteria: qualifyProspect() applies configurable rules, returns score + reasons
+  - Test strategy: Unit tests with various business profiles, edge cases (no website, low ratings)
+
+- [ ] Integrate with data layer (depends on: [lead repository, prospect qualifier])
+  - Acceptance criteria: Discovered leads automatically saved to database with qualification scores
+  - Test strategy: End-to-end test from Maps search to database storage
+
+**Exit Criteria**:
+- System can search Maps and extract 100+ businesses
+- Qualification rules correctly filter prospects
+- Leads persist to database with all metadata
+
+**Delivers**: Automated lead generation pipeline producing qualified prospects
+
+---
+
+### Phase 3: Website Audit Engine
+**Goal**: Comprehensive technical auditing with visual evidence generation
+
+**Entry Criteria**: Phase 1 complete (can develop in parallel with Phase 2)
+
+**Tasks**:
+- [ ] Integrate Lighthouse for performance analysis (depends on: [shared, mcp-servers])
+  - Acceptance criteria: analyzePerformance() returns Core Web Vitals, unused code percentage
+  - Test strategy: Integration tests with known slow/fast websites, verify metric accuracy
+
+- [ ] Build accessibility scanner (depends on: [shared, mcp-servers])
+  - Acceptance criteria: scanAccessibility() detects WCAG violations via a11y tree inspection
+  - Test strategy: Integration tests with sites having known violations, verify detection accuracy
+
+- [ ] Implement visual evidence capture (depends on: [shared, mcp-servers])
+  - Acceptance criteria: captureEvidence() generates mobile screenshots and video for slow loads
+  - Test strategy: Integration tests verify files created, proper viewport settings
+
+- [ ] Create responsiveness analyzer (depends on: [visual evidence])
+  - Acceptance criteria: analyzeResponsiveness() tests multiple viewports, captures layout shifts
+  - Test strategy: Integration tests with responsive/non-responsive sites
+
+- [ ] Integrate with data layer (depends on: [all audit features, data-layer])
+  - Acceptance criteria: Audit results and evidence automatically saved with lead associations
+  - Test strategy: End-to-end test from URL input to stored audit + evidence files
+
+**Exit Criteria**:
+- System audits website and generates complete technical report
+- Visual evidence (screenshots, videos) captured and stored
+- Audit results linked to leads in database
+
+**Delivers**: Technical audit capability producing evidence for sales outreach
+
+---
+
+### Phase 4: Email Automation
+**Goal**: Dynamic email campaigns with audit-based personalization and delivery tracking
+
+**Entry Criteria**: Phase 1 and Phase 3 complete (needs data layer and audit results)
+
+**Tasks**:
+- [ ] Build template engine (depends on: [shared, audit-engine])
+  - Acceptance criteria: renderEmail() populates templates with specific audit findings
+  - Test strategy: Unit tests with templates + mock audit data, verify variable substitution
+
+- [ ] Implement campaign orchestrator (depends on: [template engine, mcp-servers, data-layer])
+  - Acceptance criteria: executeCampaign() schedules emails via Mailgun with follow-up sequences
+  - Test strategy: Integration tests verify Mailgun API calls, follow-up scheduling logic
+
+- [ ] Create delivery tracker (depends on: [mcp-servers, data-layer])
+  - Acceptance criteria: trackDelivery() consumes Mailgun webhooks, updates lead status
+  - Test strategy: Integration tests with webhook simulation, verify status updates
+
+- [ ] Integrate Google Calendar (depends on: [mcp-servers, data-layer])
+  - Acceptance criteria: scheduleCalendar() checks availability, creates events on booking
+  - Test strategy: Integration tests with test calendar, verify event creation + notifications
+
+- [ ] Build campaign analytics (depends on: [delivery tracker, data-layer])
+  - Acceptance criteria: Campaign dashboard shows opens, clicks, replies, conversions
+  - Test strategy: Integration tests with known email events, verify metric calculations
+
+**Exit Criteria**:
+- Email campaigns send with personalized audit findings
+- Delivery and engagement tracked automatically
+- Meeting bookings flow to Google Calendar
+
+**Delivers**: End-to-end outreach automation from audit to booked meeting
+
+---
+
+### Phase 5: React Dashboard
+**Goal**: User interface for campaign management, lead review, and performance monitoring
+
+**Entry Criteria**: All backend modules complete (Phases 0-4)
+
+**Tasks**:
+- [ ] Setup React project with TypeScript (depends on: [shared])
+  - Acceptance criteria: Vite project with TypeScript, Tailwind CSS configured
+  - Test strategy: Development server runs, hot reload works
+
+- [ ] Build lead management interface (depends on: [data-layer])
+  - Acceptance criteria: Lead list with filters, search, pagination, bulk actions
+  - Test strategy: E2E tests with Playwright verify CRUD operations
+
+- [ ] Create audit results viewer (depends on: [data-layer, audit-engine])
+  - Acceptance criteria: Audit report display with charts, screenshot gallery, PDF export
+  - Test strategy: E2E tests verify report rendering, screenshot zoom, PDF download
+
+- [ ] Implement campaign dashboard (depends on: [data-layer, email-automation])
+  - Acceptance criteria: Real-time campaign metrics with charts, funnel visualization
+  - Test strategy: E2E tests verify data accuracy, chart interactions
+
+- [ ] Build settings interface (depends on: [data-layer])
+  - Acceptance criteria: Email template editor, search criteria config, API credential management
+  - Test strategy: E2E tests verify template validation, settings persistence
+
+- [ ] Implement authentication (depends on: [shared, mcp-servers])
+  - Acceptance criteria: Supabase Auth integration with email/password login
+  - Test strategy: E2E tests for login, logout, protected routes
+
+**Exit Criteria**:
+- Complete UI covers all system functionality
+- Users can execute full workflow: search → audit → campaign → review results
+- Authentication protects all routes
+
+**Delivers**: Production-ready application with full user interface
+
+---
+
+### Phase 6: Integration & Polish
+**Goal**: End-to-end testing, performance optimization, and production readiness
+
+**Entry Criteria**: All features implemented (Phases 0-5 complete)
+
+**Tasks**:
+- [ ] End-to-end workflow testing (depends on: [all modules])
+  - Acceptance criteria: Complete user journeys tested (search to booked meeting)
+  - Test strategy: Playwright E2E tests covering happy path + error scenarios
+
+- [ ] Performance optimization (depends on: [all modules])
+  - Acceptance criteria: Dashboard loads <2s, audit processes 100 sites/hour
+  - Test strategy: Load testing with k6, profiling with Chrome DevTools
+
+- [ ] Error handling and retry logic (depends on: [all modules])
+  - Acceptance criteria: Graceful degradation for API failures, automatic retries for transient errors
+  - Test strategy: Chaos testing with simulated failures
+
+- [ ] Documentation (depends on: [all modules])
+  - Acceptance criteria: Architecture docs, API reference, deployment guide complete
+  - Test strategy: Documentation review, onboarding test with new developer
+
+- [ ] Deployment pipeline (depends on: [all modules])
+  - Acceptance criteria: CI/CD with GitHub Actions, automated tests, deployment to Vercel/Railway
+  - Test strategy: Deployment dry-run to staging environment
+
+**Exit Criteria**:
+- All E2E tests passing
+- Performance meets targets
+- Production deployment successful
+
+**Delivers**: Production-ready Autonomous AI Revenue Engine
+
+</implementation-roadmap>
+
+---
+
+<test-strategy>
+## Test Pyramid
+
+```
+        /\
+       /E2E\       ← 10% (End-to-end user workflows, slow but comprehensive)
+      /------\
+     /Integration\ ← 30% (MCP server interactions, module boundaries)
+    /------------\
+   /  Unit Tests  \ ← 60% (Business logic, pure functions, fast)
+  /----------------\
+```
+
+## Coverage Requirements
+- Line coverage: 80% minimum (aim for 90% in business logic modules)
+- Branch coverage: 75% minimum (all error paths tested)
+- Function coverage: 85% minimum (all exported functions covered)
+- Statement coverage: 80% minimum
+
+## Critical Test Scenarios
+
+### Lead Discovery Module
+**Happy path**:
+- Search returns 20 businesses for "restaurants in San Francisco"
+- Expected: All businesses have name, location, and rating fields populated
+
+**Edge cases**:
+- Search with no results (obscure location + category)
+- Expected: Empty array returned, no errors thrown
+
+- Business listing without website URL
+- Expected: Qualification fails with "no_website" reason
+
+**Error cases**:
+- Maps API rate limit exceeded
+- Expected: Retry with exponential backoff, eventual error if limit persists
+
+- Network timeout during search
+- Expected: Throw timeout error after 30s, log diagnostic info
+
+**Integration points**:
+- Discovered leads saved to database via data-layer
+- Expected: Lead records created with correct foreign keys
+
+### Audit Engine Module
+**Happy path**:
+- Audit website with known slow performance
+- Expected: Performance score <50, unused code >70%, screenshots captured
+
+**Edge cases**:
+- Website blocks headless browsers
+- Expected: Retry with stealth mode, fallback to limited audit if blocked
+
+- Website behind authentication
+- Expected: Skip audit, flag as "requires_auth" in results
+
+**Error cases**:
+- Website returns 404 or 500
+- Expected: Log error, mark audit as "failed" with error reason
+
+- Lighthouse timeout after 60s
+- Expected: Partial audit with available metrics, flag timeout
+
+**Integration points**:
+- Audit results and evidence files saved to database
+- Expected: Audit record linked to lead, evidence URLs accessible
+
+### Email Automation Module
+**Happy path**:
+- Render email template with audit findings
+- Expected: Template variables replaced with actual performance metrics, evidence URLs embedded
+
+**Edge cases**:
+- Template references audit field that doesn't exist
+- Expected: Default placeholder text used, warning logged
+
+- Email send to invalid address
+- Expected: Bounce tracked, lead marked as "invalid_email"
+
+**Error cases**:
+- Mailgun API returns 5xx error
+- Expected: Retry 3 times with exponential backoff, queue for later if all fail
+
+- Webhook delivery failure
+- Expected: Webhook endpoint retries, eventual manual reconciliation if persistent failure
+
+**Integration points**:
+- Campaign execution updates lead status in database
+- Expected: Status transitions from "Pending" to "Contacted" on successful send
+
+### Data Layer Module
+**Happy path**:
+- Save lead with complete profile and audit results
+- Expected: Lead inserted, audit linked via foreign key, evidence files uploaded
+
+**Edge cases**:
+- Duplicate lead based on website URL
+- Expected: Update existing lead instead of creating duplicate
+
+- Lead without website (phone-only business)
+- Expected: Save lead, skip audit, flag for manual review
+
+**Error cases**:
+- Database connection lost during transaction
+- Expected: Transaction rolled back, error logged, retry on next attempt
+
+- Evidence file upload exceeds size limit
+- Expected: File rejected, error message specifies size limit, audit saves without evidence
+
+**Integration points**:
+- All modules use data-layer for persistence
+- Expected: Consistent data access patterns, no direct database queries outside data-layer
+
+## Test Generation Guidelines
+
+For **TDD implementation** using Surgical Test Generator:
+
+1. **Start with integration tests for MCP interactions**: These define the contract with external services
+2. **Write unit tests for business logic**: Pure functions testing qualification rules, template rendering, analytics calculations
+3. **Add E2E tests for critical user journeys**: Search → Audit → Email → Book meeting
+4. **Test error scenarios explicitly**: Network failures, API limits, invalid inputs
+5. **Use test fixtures**: Mock Maps responses, sample websites, canned audit results for deterministic tests
+6. **Isolate side effects**: Mock file uploads, email sends in unit tests; use test instances in integration tests
+7. **Focus on edge cases**: Empty results, missing fields, boundary values for thresholds
+
+**Project-specific conventions**:
+- All MCP client calls should have corresponding integration tests
+- Database tests use transaction rollback for cleanup
+- Use Playwright for E2E tests with video recording on failure
+- Visual regression tests for dashboard components using Chromatic or Percy
+
+</test-strategy>
+
+---
+
+<architecture>
+## System Components
+
+### Frontend Architecture
+**React Dashboard** (TypeScript + Vite + Tailwind CSS)
+- Component-based UI with functional components and hooks
+- State management via React Context for global state (auth, config)
+- React Query for server state management and caching
+- React Router for client-side routing
+- Tailwind CSS for styling with custom design system
+
+### Backend Architecture
+**Serverless Functions** (Vercel/Netlify Functions or Railway)
+- API routes for dashboard data fetching
+- Webhook endpoints for Mailgun event processing
+- Scheduled jobs for campaign execution (cron-based)
+- Authentication middleware via Supabase Auth
+
+### MCP Integration Layer
+**Model Context Protocol Servers** (standardized integrations)
+- Puppeteer MCP: Browser automation for scraping and auditing
+- Supabase MCP: PostgreSQL database operations
+- Mailgun MCP: Email delivery and tracking
+- Google Calendar MCP: Meeting scheduling
+
+### Data Flow
+1. User initiates search via Dashboard
+2. Dashboard calls API route → lead-discovery module
+3. Lead-discovery uses Puppeteer MCP to scrape Maps → saves via data-layer (Supabase MCP)
+4. Audit-engine uses Puppeteer MCP to analyze website → saves results via data-layer
+5. Email-automation retrieves lead + audit → renders template → sends via Mailgun MCP
+6. Mailgun webhooks trigger status updates via data-layer
+7. Dashboard polls data-layer for real-time updates
+
+## Data Models
+
+### Lead Profile Schema
+```typescript
+interface LeadProfile {
+  id: string;                    // UUID primary key
+  business_name: string;         // Business name from Maps
+  address: string;               // Full address
+  phone: string | null;          // Contact phone
+  website_url: string | null;    // Website URL
+  rating: number;                // Google rating (1-5)
+  review_count: number;          // Number of reviews
+  category: string;              // Business category
+  search_query: string;          // Original search query
+  qualification_score: number;   // 0-100 score
+  qualification_reasons: string[]; // Array of flags
+  status: LeadStatus;            // Pipeline status enum
+  created_at: Date;
+  updated_at: Date;
+}
+
+enum LeadStatus {
+  PENDING = 'pending',
+  CONTACTED = 'contacted',
+  RESPONDED = 'responded',
+  BOOKED = 'booked',
+  DISQUALIFIED = 'disqualified'
+}
+```
+
+### Audit Result Schema
+```typescript
+interface AuditResult {
+  id: string;                    // UUID primary key
+  lead_id: string;               // Foreign key to leads table
+  url: string;                   // Audited URL
+  performance_score: number;     // Lighthouse score (0-100)
+  fcp: number;                   // First Contentful Paint (ms)
+  lcp: number;                   // Largest Contentful Paint (ms)
+  cls: number;                   // Cumulative Layout Shift
+  unused_code_percent: number;   // % of unused CSS/JS
+  accessibility_score: number;   // Lighthouse a11y score (0-100)
+  wcag_violations: WCAGViolation[]; // Array of violations
+  evidence_urls: string[];       // Signed URLs to screenshots/videos
+  responsive_issues: ResponsiveIssue[]; // Layout problems
+  audit_date: Date;
+  created_at: Date;
+}
+
+interface WCAGViolation {
+  rule_id: string;               // WCAG rule (e.g., "1.1.1")
+  severity: 'critical' | 'serious' | 'moderate' | 'minor';
+  description: string;
+  element_selector: string;      // CSS selector for affected element
+  recommendation: string;
+}
+```
+
+### Campaign Configuration Schema
+```typescript
+interface CampaignConfig {
+  id: string;                    // UUID primary key
+  name: string;                  // Campaign name
+  template_id: string;           // Email template reference
+  lead_filters: LeadFilters;     // Criteria for lead selection
+  sequence: EmailSequenceStep[]; // Multi-step sequence
+  status: 'draft' | 'active' | 'paused' | 'completed';
+  created_at: Date;
+  updated_at: Date;
+}
+
+interface EmailSequenceStep {
+  step_number: number;           // 1, 2, 3...
+  delay_days: number;            // Days after previous step
+  template_id: string;
+  send_condition: 'always' | 'if_no_reply' | 'if_no_open';
+}
+```
+
+## Technology Stack
+
+| Layer | Technology | Version |
+|-------|------------|---------|
+| **Frontend** | React | 18+ |
+| | TypeScript | 5+ |
+| | Vite | 5+ |
+| | Tailwind CSS | 3+ |
+| | React Query | 5+ |
+| **Backend** | Node.js | 20+ LTS |
+| | Serverless Functions | Vercel/Railway |
+| **MCP Servers** | @modelcontextprotocol/server-puppeteer | Latest |
+| | @supabase/mcp-server-postgrest | Latest |
+| | @mailgun/mailgun-mcp-server | Latest |
+| | @cocal/google-calendar-mcp | Latest |
+| **Database** | PostgreSQL (Supabase) | 15+ |
+| **Auditing** | Lighthouse CI | 12+ |
+| | Puppeteer | 22+ |
+| **Email** | Mailgun | API v4 |
+
+**Decision: Model Context Protocol (MCP) Architecture**
+- **Rationale**: MCP provides standardized interfaces for AI-agent integration, future-proofing the system for agentic workflows. Official MCP servers from Puppeteer, Supabase, and Mailgun reduce custom integration code and maintenance burden.
+- **Trade-offs**: Introduces dependency on MCP ecosystem stability, requires MCP runtime configuration. Gains: Standardized tool calling, easier integration with AI agents, reduced boilerplate.
+- **Alternatives considered**: Direct API integration (more code, less standardized), Zapier/Make (vendor lock-in, higher cost), n8n (self-hosted complexity)
+
+**Decision: Puppeteer over Playwright**
+- **Rationale**: Official @modelcontextprotocol/server-puppeteer MCP server exists, providing immediate MCP integration. Puppeteer has proven Google Maps scraping patterns in community.
+- **Trade-offs**: Playwright has better parallel execution and modern API, but lacks official MCP server. Puppeteer MCP integration saves development time.
+- **Alternatives considered**: Playwright (better performance, no MCP server), Selenium (outdated, slower)
+
+**Decision: Supabase over Raw PostgreSQL**
+- **Rationale**: Supabase provides managed PostgreSQL with built-in authentication, real-time subscriptions, storage, and official MCP server. Reduces infrastructure complexity.
+- **Trade-offs**: Vendor lock-in to Supabase, higher cost than self-hosted Postgres. Gains: Auth, storage, real-time, MCP integration out of box.
+- **Alternatives considered**: Raw PostgreSQL + custom auth (more control, more code), Firebase (NoSQL limitations), MongoDB (schema flexibility not needed)
+
+**Decision: Mailgun over SendGrid/AWS SES**
+- **Rationale**: Mailgun has official MCP server, superior deliverability reputation, and robust webhook system for engagement tracking.
+- **Trade-offs**: Higher cost than AWS SES. Gains: Better deliverability, MCP integration, comprehensive analytics.
+- **Alternatives considered**: SendGrid (no MCP server), AWS SES (cheap but complex setup, no MCP)
+
+**Decision: TypeScript Strict Mode**
+- **Rationale**: Catch errors at compile time, improve IDE autocomplete, self-documenting code with interfaces.
+- **Trade-offs**: Slower initial development, steeper learning curve. Gains: Fewer runtime errors, better refactoring confidence.
+- **Alternatives considered**: JavaScript (faster prototyping, more runtime errors)
+
+</architecture>
+
+---
+
+<risks>
+## Technical Risks
+
+**Risk**: Google Maps API restrictions or detection of automated scraping
+- **Impact**: High - Core lead discovery functionality breaks
+- **Likelihood**: Medium - Google actively detects bots
+- **Mitigation**: Use stealth Puppeteer configuration (disable automation flags), rotate user agents, implement request rate limiting, respect robots.txt, intercept network JSON (not HTML scraping)
+- **Fallback**: Alternative data sources (Yelp API, Yellow Pages scraping, manual CSV import), partner with data providers (Apollo, ZoomInfo) for contact data
+
+**Risk**: Email deliverability challenges (spam filters, domain reputation)
+- **Impact**: Medium - Low inbox placement reduces campaign effectiveness
+- **Likelihood**: Medium - Cold email inherently risky for deliverability
+- **Mitigation**: Implement email warming protocol (gradual volume ramp), use Mailgun's dedicated IP pools, provide easy unsubscribe, authenticate with SPF/DKIM/DMARC, monitor sender reputation scores
+- **Fallback**: Multi-channel outreach (LinkedIn, phone), partner with email deliverability services (Instantly.ai, Lemlist)
+
+**Risk**: MCP server ecosystem instability or breaking changes
+- **Impact**: Medium - Integration breakage requires code updates
+- **Likelihood**: Low - Official MCP servers maintained by reputable organizations
+- **Mitigation**: Pin MCP server versions in package.json, monitor changelogs, use official servers only, maintain abstraction layer in mcp-servers module for easier swapping
+- **Fallback**: Direct API integration if MCP server abandoned, fork and self-maintain MCP server
+
+**Risk**: Website blocking or CAPTCHAs preventing automated audits
+- **Impact**: Low - Some sites unauditable, reduces completeness
+- **Likelihood**: Medium - Many sites use bot detection
+- **Mitigation**: Stealth browsing (disable headless flags), rotate proxies, respect rate limits, handle CAPTCHAs gracefully (skip audit, flag for manual review)
+- **Fallback**: Manual audit process for high-value prospects, partner with CAPTCHA solving services (2Captcha)
+
+**Risk**: Lighthouse performance variability (network conditions, server load)
+- **Impact**: Low - Inconsistent audit scores confuse users
+- **Likelihood**: Medium - External factors affect measurements
+- **Mitigation**: Run audits 3 times and average scores, use consistent network throttling, audit during off-peak hours, normalize scores with baseline tests
+- **Fallback**: Focus on relative comparisons (before/after), provide score ranges instead of point estimates
+
+## Dependency Risks
+
+**Risk**: Supabase service outage or pricing changes
+- **Impact**: High - Complete system unavailable during outage, cost increase affects profitability
+- **Likelihood**: Low - Supabase has strong SLA and stable pricing
+- **Mitigation**: Monitor Supabase status page, implement database connection retry logic, design for graceful degradation, maintain database backups
+- **Fallback**: Migrate to self-hosted PostgreSQL + custom auth (prepared migration scripts), use Railway/Render for quick hosting
+
+**Risk**: Mailgun account suspension or deliverability issues
+- **Impact**: High - Campaign execution stops, leads go cold
+- **Likelihood**: Low - Compliant usage reduces risk
+- **Mitigation**: Follow email best practices (opt-out, CAN-SPAM compliance), monitor suspension warnings, maintain secondary Mailgun account
+- **Fallback**: Secondary email provider integration (SendGrid, AWS SES), multi-provider failover logic
+
+**Risk**: Google Calendar API quota limits or policy changes
+- **Impact**: Medium - Meeting booking fails, manual scheduling required
+- **Likelihood**: Low - Generous free tier, stable API
+- **Mitigation**: Implement quota monitoring, cache availability data, request quota increase if needed
+- **Fallback**: Alternative scheduling (Calendly integration, manual booking links)
+
+## Scope Risks
+
+**Risk**: Scope creep with advanced features (voice calling, competitive analysis, predictive scoring)
+- **Impact**: Medium - Delays core MVP launch, diverts resources
+- **Likelihood**: High - Stakeholders request features during development
+- **Mitigation**: Strict MVP scope enforcement, maintain feature backlog for post-launch, require business case for scope additions, use phased roadmap (Phase 1-2 MVP, Phase 3 advanced features)
+- **Fallback**: Launch MVP first, validate with users, prioritize post-launch features based on usage data
+
+**Risk**: Underestimation of audit processing time (limits throughput)
+- **Impact**: Medium - "100 sites/hour" target missed, user frustration
+- **Likelihood**: Medium - Lighthouse audits can be slow (30-60s each)
+- **Mitigation**: Implement parallel audit processing (5-10 concurrent), optimize Lighthouse config (disable unnecessary audits), cache results for recently audited sites
+- **Fallback**: Adjust expectations to 30-50 sites/hour, implement priority queue for urgent audits, offer premium tier with faster processing
+
+**Risk**: Unclear requirements for WCAG compliance reporting
+- **Impact**: Low - Accessibility reports don't resonate with prospects
+- **Likelihood**: Medium - Business users don't understand technical WCAG details
+- **Mitigation**: User research with target personas, A/B test report formats, translate WCAG violations to business risks ("lawsuit risk", "lost revenue from disabled users")
+- **Fallback**: Focus on performance and visual issues initially, add accessibility in Phase 2 based on user feedback
+
+</risks>
+
+---
+
+<appendix>
+## References
+
+**Technical Documentation**:
+- Model Context Protocol Specification: https://modelcontextprotocol.io/
+- Puppeteer Documentation: https://pptr.dev/
+- Lighthouse CI Guide: https://github.com/GoogleChrome/lighthouse-ci
+- Supabase Documentation: https://supabase.com/docs
+- Mailgun API Reference: https://documentation.mailgun.com/
+
+**Research Papers**:
+- "Repository Planning Graph (RPG) Method" - Microsoft Research (2024)
+- "Core Web Vitals: Essential Metrics for User Experience" - Google (2020)
+- "Web Content Accessibility Guidelines (WCAG) 2.1" - W3C
+
+**Similar Systems**:
+- Apollo.io: Lead database and engagement platform (lacks technical auditing)
+- PageSpeed Insights: Performance analysis (lacks outreach automation)
+- Hunter.io: Email finder and verification (lacks website auditing)
+
+## Glossary
+
+**Core Web Vitals**: Set of Google-defined metrics measuring real-world user experience (LCP, FCP, CLS, INP)
+
+**First Contentful Paint (FCP)**: Time from navigation to first text/image render (target: <1.8s)
+
+**Largest Contentful Paint (LCP)**: Time to render largest content element (target: <2.5s)
+
+**Cumulative Layout Shift (CLS)**: Visual stability metric measuring unexpected layout movements (target: <0.1)
+
+**Performance Debt**: Percentage of unused CSS and JavaScript code loaded but not executed
+
+**WCAG**: Web Content Accessibility Guidelines - W3C standard for accessible web design
+
+**MCP Server**: Model Context Protocol server exposing tools/resources for AI agent integration
+
+**Lead Qualification**: Process of scoring prospects based on fit and likelihood to convert
+
+**Email Warming**: Gradual increase in sending volume to build domain reputation
+
+**Signed URL**: Temporary authenticated URL for secure file access without exposing storage credentials
+
+## Open Questions
+
+**For Phase 1**:
+- What is acceptable Supabase Storage cost for evidence files? (Need to estimate average file sizes and retention policy)
+- Should we implement automatic lead deduplication across searches? (Risk: miss valid prospects with multiple locations)
+- What is the correct balance of qualification strictness vs. lead volume? (Needs A/B testing with real users)
+
+**For Phase 2**:
+- How do we handle Google Maps API rate limits in production? (May need business account or proxy rotation)
+- Should we scrape reviews/questions for additional qualification signals? (Adds value but increases complexity)
+
+**For Phase 3**:
+- What Lighthouse audits should we skip for faster processing? (PWA, SEO may not matter for lead qualification)
+- How do we handle single-page applications in audits? (May need custom navigation/wait logic)
+
+**For Phase 4**:
+- What is optimal email sequence length? (1 email, 3-step sequence, 5-step? Needs testing)
+- Should we A/B test email templates automatically? (High value but complex orchestration)
+
+**For Phase 5**:
+- What analytics do users actually need vs. nice-to-have? (Avoid dashboard bloat, focus on actionable metrics)
+- Should we implement multi-user support in MVP? (Adds auth complexity but may be required for agencies)
+
+**For Launch**:
+- What is minimum viable deliverability reputation before launching email campaigns? (Need warming timeline)
+- How do we price evidence storage (included vs. metered)? (Impacts unit economics)
+- Should we offer white-label version for agency resellers? (High value but requires multi-tenancy)
+
+</appendix>
+
+---
+
+<task-master-integration>
+# How Task Master Uses This PRD
+
+When you run `task-master parse-prd autonomous_revenue_engine_rpg_roadmap.txt`, the parser will:
+
+1. **Extract Capabilities** → Main Tasks
+   - "Lead Discovery" → Task: Implement Lead Discovery System
+   - "Website Technical Audit" → Task: Implement Audit Engine
+   - "Lead Data Management" → Task: Build Data Layer
+   - "Email Outreach Automation" → Task: Create Email Automation
+   - "User Interface Dashboard" → Task: Build React Dashboard
+
+2. **Extract Features** → Subtasks
+   - Under "Lead Discovery":
+     - Subtask: Geographic Business Search
+     - Subtask: Business Data Extraction
+     - Subtask: Prospect Qualification Filter
+
+3. **Parse Dependencies** → Task Ordering
+   - Foundation (shared, mcp-servers) → No dependencies (Phase 0)
+   - Data Layer → Depends on [shared, mcp-servers] (Phase 1)
+   - Lead Discovery → Depends on [shared, mcp-servers, data-layer] (Phase 2)
+   - Audit Engine → Depends on [shared, mcp-servers, data-layer] (Phase 3, parallel with Phase 2)
+   - Email Automation → Depends on [shared, mcp-servers, data-layer, audit-engine] (Phase 4)
+   - Dashboard → Depends on [all backend modules] (Phase 5)
+
+4. **Use Phases** → Prioritized Execution
+   - Phase 0: Highest priority (foundation must exist first)
+   - Phases 2 & 3: Can execute in parallel (no interdependency)
+   - Phases 4 & 5: Sequential after dependencies complete
+
+5. **Leverage Test Strategy** → TDD Workflow
+   - For each task, Surgical Test Generator receives:
+     - Critical test scenarios from <test-strategy>
+     - Coverage requirements (80% line, 75% branch)
+     - Test generation guidelines (integration tests for MCP, unit tests for business logic)
+
+**Result**: A fully-ordered task graph where:
+- No task executes before its dependencies are complete
+- Parallel tasks (Phases 2 & 3) maximize development velocity
+- Test-first development enforced via explicit test strategies
+- Clear acceptance criteria for each phase gate
+
+## Validation Checklist
+
+Before executing with Task Master, verify:
+- [x] All modules in dependency graph have corresponding implementation phases
+- [x] No circular dependencies exist (e.g., A depends on B, B depends on A)
+- [x] Foundation modules (shared, mcp-servers) have no dependencies
+- [x] Each feature has clear inputs, outputs, and behavior specifications
+- [x] Test strategy covers all critical modules (data-layer, audit-engine, email-automation)
+- [x] Success metrics are quantifiable and testable
+- [x] Risk mitigations are actionable (not just "be careful")
+
+## Recommended Task Master Workflow
+
+```bash
+# 1. Parse this PRD into task graph
+task-master parse-prd autonomous_revenue_engine_rpg_roadmap.txt
+
+# 2. Review dependency graph
+task-master view-graph
+
+# 3. Execute Phase 0 (Foundation)
+task-master execute --phase 0
+
+# 4. Once Phase 0 complete, execute Phase 1 (Data Layer)
+task-master execute --phase 1
+
+# 5. Execute Phases 2 & 3 in parallel (Lead Discovery + Audit Engine)
+task-master execute --phase 2 --parallel
+task-master execute --phase 3 --parallel
+
+# 6. Execute Phase 4 (Email Automation)
+task-master execute --phase 4
+
+# 7. Execute Phase 5 (Dashboard)
+task-master execute --phase 5
+
+# 8. Execute Phase 6 (Integration & Polish)
+task-master execute --phase 6
+```
+
+## Why This RPG Structure Works
+
+**Traditional Flat PRD Issues**:
+- ❌ "Build the dashboard" - depends on what? Unclear.
+- ❌ "Implement email automation" - can this start now or wait for audits?
+- ❌ "Setup database" - which modules need it first?
+- ❌ Developers make wrong assumptions about execution order
+
+**RPG-Structured PRD Benefits**:
+- ✅ Explicit dependencies: "Email Automation depends on [audit-engine, data-layer]"
+- ✅ Topological order: Foundation → Data → Discovery/Audit (parallel) → Automation → UI
+- ✅ Clear module boundaries: Each module maps to ONE capability
+- ✅ Testable milestones: Phase exit criteria validate progress
+- ✅ Parallelization opportunities: Phases 2 & 3 can run simultaneously
+
+**Result**: Developers (human or AI) can execute tasks in correct order without asking "what should I build first?"
+</task-master-integration>
