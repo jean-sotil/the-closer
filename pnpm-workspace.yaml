@@ -1,0 +1,12 @@
+packages:
+  # Dashboard application
+  - "apps/dashboard"
+
+  # MCP Server packages
+  - "packages/mcp-lead-discovery"
+  - "packages/mcp-site-audit"
+  - "packages/mcp-email-outreach"
+  - "packages/mcp-lead-storage"
+
+  # Shared utilities
+  - "packages/shared"

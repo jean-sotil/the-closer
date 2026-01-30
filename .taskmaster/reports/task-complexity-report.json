@@ -1,0 +1,333 @@
+{
+	"meta": {
+		"generatedAt": "2026-01-30T22:21:27.649Z",
+		"tasksAnalyzed": 40,
+		"totalTasks": 40,
+		"analysisCount": 40,
+		"thresholdScore": 5,
+		"projectName": "Taskmaster",
+		"usedResearch": false
+	},
+	"complexityAnalysis": [
+		{
+			"taskId": 1,
+			"taskTitle": "Initialize TypeScript Project with Strict Configuration",
+			"complexityScore": 3,
+			"recommendedSubtasks": 0,
+			"expansionPrompt": "Break down into detailed configuration steps for each tool (pnpm, tsconfig, ESLint, Prettier) with verification commands.",
+			"reasoning": "Straightforward setup tasks with clear steps and existing subtasks. Low cognitive complexity, mostly configuration file creation and package installation. Dependencies are minimal."
+		},
+		{
+			"taskId": 2,
+			"taskTitle": "Define Core TypeScript Interfaces and Types",
+			"complexityScore": 4,
+			"recommendedSubtasks": 0,
+			"expansionPrompt": "Create separate files for each domain (lead, audit, campaign) with comprehensive JSDoc and type validation tests.",
+			"reasoning": "Type definition work with moderate complexity due to cross-references and composite types. Well-defined structure reduces cognitive load. Existing subtasks provide good breakdown."
+		},
+		{
+			"taskId": 3,
+			"taskTitle": "Implement Configuration Management System",
+			"complexityScore": 5,
+			"recommendedSubtasks": 0,
+			"expansionPrompt": "Detail Zod schema creation, singleton pattern implementation, and comprehensive error message generation for each config section.",
+			"reasoning": "Involves Zod schema complexity, singleton pattern, and error handling. Moderate cognitive complexity but well-scoped with clear validation requirements."
+		},
+		{
+			"taskId": 4,
+			"taskTitle": "Create Error Handling Utilities and Base Error Classes",
+			"complexityScore": 4,
+			"recommendedSubtasks": 0,
+			"expansionPrompt": "Document each error type's usage scenarios and create comprehensive error mapping from external APIs.",
+			"reasoning": "Systematic class hierarchy creation. Low algorithmic complexity, moderate design complexity for proper inheritance and serialization."
+		},
+		{
+			"taskId": 5,
+			"taskTitle": "Implement Zod Validation Schemas",
+			"complexityScore": 6,
+			"recommendedSubtasks": 0,
+			"expansionPrompt": "Create detailed validation rules for edge cases, custom transformers, and comprehensive test coverage for each schema.",
+			"reasoning": "Complex nested Zod schemas with transforms, refinements, and custom validation logic. Higher cognitive complexity due to interdependent type relationships."
+		},
+		{
+			"taskId": 6,
+			"taskTitle": "Setup MCP Client Wrapper for Puppeteer",
+			"complexityScore": 8,
+			"recommendedSubtasks": 0,
+			"expansionPrompt": "Detail MCP protocol integration, connection lifecycle management, and stealth plugin configuration specifics.",
+			"reasoning": "High complexity due to external MCP protocol integration, connection management, stealth features, and error recovery. Multiple failure modes."
+		},
+		{
+			"taskId": 7,
+			"taskTitle": "Setup MCP Client Wrapper for Supabase",
+			"complexityScore": 8,
+			"recommendedSubtasks": 0,
+			"expansionPrompt": "Specify PostgREST query building patterns, transaction isolation levels, and storage bucket permission handling.",
+			"reasoning": "Complex database client wrapper with query building, transactions, storage operations, and type inference. High integration complexity."
+		},
+		{
+			"taskId": 8,
+			"taskTitle": "Setup MCP Client Wrapper for Mailgun",
+			"complexityScore": 7,
+			"recommendedSubtasks": 0,
+			"expansionPrompt": "Detail Mailgun API rate limit handling, webhook signature verification algorithm, and batch recipient validation.",
+			"reasoning": "External API integration with rate limiting, webhook security, and batch processing. Moderate to high complexity due to external service dependencies."
+		},
+		{
+			"taskId": 9,
+			"taskTitle": "Setup MCP Client Wrapper for Google Calendar",
+			"complexityScore": 7,
+			"recommendedSubtasks": 0,
+			"expansionPrompt": "Implement OAuth token refresh logic, timezone conversion utilities, and availability slot generation algorithm.",
+			"reasoning": "OAuth complexity, timezone handling, and availability calculation. Moderate complexity with external calendar API integration."
+		},
+		{
+			"taskId": 10,
+			"taskTitle": "Configure Supabase Database Schema",
+			"complexityScore": 5,
+			"recommendedSubtasks": 0,
+			"expansionPrompt": "Include RLS policy definitions, trigger functions for audit trails, and comprehensive index analysis.",
+			"reasoning": "SQL schema design with constraints, indexes, and relationships. Moderate complexity requiring database normalization knowledge."
+		},
+		{
+			"taskId": 11,
+			"taskTitle": "Implement Lead Repository for Data Persistence",
+			"complexityScore": 7,
+			"recommendedSubtasks": 0,
+			"expansionPrompt": "Detail query optimization strategies, transaction boundaries, and deduplication normalization logic.",
+			"reasoning": "Complex CRUD with search, pagination, bulk operations, and deduplication. High data layer complexity with query optimization needs."
+		},
+		{
+			"taskId": 12,
+			"taskTitle": "Build Lead Status Tracking System",
+			"complexityScore": 6,
+			"recommendedSubtasks": 0,
+			"expansionPrompt": "Define complete state machine transitions, webhook callback registration patterns, and history query optimization.",
+			"reasoning": "State machine complexity with validation, history tracking, and webhook integration. Moderate to high business logic complexity."
+		},
+		{
+			"taskId": 13,
+			"taskTitle": "Create Evidence Storage Module",
+			"complexityScore": 6,
+			"recommendedSubtasks": 0,
+			"expansionPrompt": "Specify file format validation regexes, signed URL expiration strategies, and orphaned file cleanup cron logic.",
+			"reasoning": "File storage with validation, signed URLs, and cleanup. Moderate complexity with storage-specific concerns."
+		},
+		{
+			"taskId": 14,
+			"taskTitle": "Implement Analytics Data Aggregation",
+			"complexityScore": 7,
+			"recommendedSubtasks": 0,
+			"expansionPrompt": "Optimize SQL queries for funnel metrics, implement cache invalidation strategies, and detail time-series bucketing logic.",
+			"reasoning": "Complex SQL aggregations, time-series queries, and caching. High analytical query complexity."
+		},
+		{
+			"taskId": 15,
+			"taskTitle": "Build Google Maps Scraper with Puppeteer MCP",
+			"complexityScore": 9,
+			"recommendedSubtasks": 0,
+			"expansionPrompt": "Detail network interception patterns, scroll detection algorithms, and JSON response parsing selectors.",
+			"reasoning": "High complexity: web scraping, network interception, scrolling logic, anti-detection. Fragile external dependency."
+		},
+		{
+			"taskId": 16,
+			"taskTitle": "Implement Business Data Extraction Pipeline",
+			"complexityScore": 5,
+			"recommendedSubtasks": 0,
+			"expansionPrompt": "Create regex patterns for phone/address normalization, validation rule sets, and error categorization.",
+			"reasoning": "Data transformation and normalization. Moderate complexity with regex and validation logic."
+		},
+		{
+			"taskId": 17,
+			"taskTitle": "Create Prospect Qualification Filter",
+			"complexityScore": 4,
+			"recommendedSubtasks": 0,
+			"expansionPrompt": "Define scoring formula weights, configurable rule sets, and edge case handling for qualification logic.",
+			"reasoning": "Rule-based scoring system. Low to moderate algorithmic complexity."
+		},
+		{
+			"taskId": 18,
+			"taskTitle": "Integrate Lead Discovery with Data Layer",
+			"complexityScore": 7,
+			"recommendedSubtasks": 0,
+			"expansionPrompt": "Implement pipeline error boundaries, progress reporting hooks, and partial result handling strategies.",
+			"reasoning": "Orchestration of multiple services with error handling and progress tracking. Moderate integration complexity."
+		},
+		{
+			"taskId": 19,
+			"taskTitle": "Integrate Lighthouse for Performance Analysis",
+			"complexityScore": 8,
+			"recommendedSubtasks": 0,
+			"expansionPrompt": "Configure Lighthouse CDP categories, coverage collection timing, and performance score calculation weights.",
+			"reasoning": "Complex performance tooling integration with CDP, coverage analysis, and scoring. High technical complexity."
+		},
+		{
+			"taskId": 20,
+			"taskTitle": "Build Accessibility Compliance Scanner",
+			"complexityScore": 9,
+			"recommendedSubtasks": 0,
+			"expansionPrompt": "Define accessibility tree traversal algorithms, WCAG rule mappings, and severity scoring formulas.",
+			"reasoning": "Complex DOM tree analysis, WCAG compliance checking, and reporting. High domain-specific complexity."
+		},
+		{
+			"taskId": 21,
+			"taskTitle": "Implement Visual Evidence Capture System",
+			"complexityScore": 7,
+			"recommendedSubtasks": 0,
+			"expansionPrompt": "Specify canvas annotation algorithms, video frame extraction timing, and format conversion logic.",
+			"reasoning": "Screenshot/video capture with annotation. Moderate complexity with media processing."
+		},
+		{
+			"taskId": 22,
+			"taskTitle": "Create Mobile Responsiveness Analyzer",
+			"complexityScore": 7,
+			"recommendedSubtasks": 0,
+			"expansionPrompt": "Define viewport breakpoint logic, touch target measurement algorithms, and layout shift detection.",
+			"reasoning": "Multi-viewport testing with issue detection. Moderate complexity with cross-device analysis."
+		},
+		{
+			"taskId": 23,
+			"taskTitle": "Integrate Audit Engine with Data Layer",
+			"complexityScore": 8,
+			"recommendedSubtasks": 0,
+			"expansionPrompt": "Detail audit orchestration sequence, partial result merging logic, and batch concurrency controls.",
+			"reasoning": "Complex orchestration of multiple analysis modules with persistence. High integration complexity."
+		},
+		{
+			"taskId": 24,
+			"taskTitle": "Build Email Template Engine",
+			"complexityScore": 6,
+			"recommendedSubtasks": 0,
+			"expansionPrompt": "Implement Handlebars helper functions, variable resolution precedence, and template validation rules.",
+			"reasoning": "Template engine with variable substitution and conditionals. Moderate templating complexity."
+		},
+		{
+			"taskId": 25,
+			"taskTitle": "Implement Email Campaign Orchestrator",
+			"complexityScore": 9,
+			"recommendedSubtasks": 0,
+			"expansionPrompt": "Define sequence state machine, condition evaluation logic, and capacity throttling algorithms.",
+			"reasoning": "Complex campaign orchestration with scheduling, conditions, and capacity management. High business logic complexity."
+		},
+		{
+			"taskId": 26,
+			"taskTitle": "Create Email Delivery Tracker",
+			"complexityScore": 7,
+			"recommendedSubtasks": 0,
+			"expansionPrompt": "Specify webhook signature verification, event routing patterns, and reply intent detection.",
+			"reasoning": "Webhook processing with event routing and state updates. Moderate complexity with real-time concerns."
+		},
+		{
+			"taskId": 27,
+			"taskTitle": "Integrate Google Calendar for Meeting Booking",
+			"complexityScore": 7,
+			"recommendedSubtasks": 0,
+			"expansionPrompt": "Implement availability slot generation algorithm, double-booking prevention, and timezone conversion.",
+			"reasoning": "Calendar integration with availability and booking logic. Moderate complexity with time handling."
+		},
+		{
+			"taskId": 28,
+			"taskTitle": "Setup React Dashboard Project",
+			"complexityScore": 4,
+			"recommendedSubtasks": 0,
+			"expansionPrompt": "Detail Vite configuration options, Tailwind theme customization, and React Query provider setup.",
+			"reasoning": "Standard React setup with common tooling. Low complexity, mostly configuration."
+		},
+		{
+			"taskId": 29,
+			"taskTitle": "Build Lead Management Interface",
+			"complexityScore": 7,
+			"recommendedSubtasks": 0,
+			"expansionPrompt": "Implement table virtualization, filter state synchronization, and bulk action confirmation flows.",
+			"reasoning": "Complex React UI with table, filters, bulk actions. Moderate to high frontend complexity."
+		},
+		{
+			"taskId": 30,
+			"taskTitle": "Create Audit Results Viewer",
+			"complexityScore": 8,
+			"recommendedSubtasks": 0,
+			"expansionPrompt": "Specify chart configurations, modal state management, PDF generation layout, and compare delta calculations.",
+			"reasoning": "Complex data visualization with charts, gallery, PDF export, and comparison. High UI complexity."
+		},
+		{
+			"taskId": 31,
+			"taskTitle": "Implement Campaign Dashboard",
+			"complexityScore": 8,
+			"recommendedSubtasks": 0,
+			"expansionPrompt": "Detail real-time data synchronization, funnel visualization math, and responsive grid layouts.",
+			"reasoning": "Real-time dashboard with multiple charts and metrics. High frontend visualization complexity."
+		},
+		{
+			"taskId": 32,
+			"taskTitle": "Build Settings and Configuration Interface",
+			"complexityScore": 6,
+			"recommendedSubtasks": 0,
+			"expansionPrompt": "Implement rich text editor integrations, file upload validation, and tab state persistence.",
+			"reasoning": "Multiple settings forms with rich editors and file uploads. Moderate UI complexity."
+		},
+		{
+			"taskId": 33,
+			"taskTitle": "Implement Supabase Authentication",
+			"complexityScore": 6,
+			"recommendedSubtasks": 0,
+			"expansionPrompt": "Detail session persistence strategies, RLS policy definitions, and protected route patterns.",
+			"reasoning": "Authentication with context, protected routes, and RLS. Moderate auth complexity."
+		},
+		{
+			"taskId": 34,
+			"taskTitle": "End-to-End Workflow Testing",
+			"complexityScore": 9,
+			"recommendedSubtasks": 0,
+			"expansionPrompt": "Create test data factories, mock external service scenarios, and visual regression baseline setup.",
+			"reasoning": "Comprehensive E2E testing across full workflows. High complexity due to test orchestration and mocking."
+		},
+		{
+			"taskId": 35,
+			"taskTitle": "Performance Optimization and Load Testing",
+			"complexityScore": 9,
+			"recommendedSubtasks": 0,
+			"expansionPrompt": "Profile specific bottlenecks, implement caching layers, and define performance budgets with monitoring.",
+			"reasoning": "Performance profiling, optimization, and load testing. High complexity requiring deep system knowledge."
+		},
+		{
+			"taskId": 36,
+			"taskTitle": "Error Handling and Retry Logic Implementation",
+			"complexityScore": 8,
+			"recommendedSubtasks": 0,
+			"expansionPrompt": "Define retry classification rules, circuit breaker state transitions, and chaos testing scenarios.",
+			"reasoning": "System-wide resilience patterns. High complexity due to distributed error handling."
+		},
+		{
+			"taskId": 37,
+			"taskTitle": "Create Documentation and Deployment Guide",
+			"complexityScore": 3,
+			"recommendedSubtasks": 0,
+			"expansionPrompt": "Include architecture diagrams, API schema examples, and step-by-step deployment screenshots.",
+			"reasoning": "Documentation writing. Low technical complexity."
+		},
+		{
+			"taskId": 38,
+			"taskTitle": "Setup CI/CD Pipeline with GitHub Actions",
+			"complexityScore": 7,
+			"recommendedSubtasks": 0,
+			"expansionPrompt": "Configure matrix testing, artifact caching, and deployment approval gates.",
+			"reasoning": "CI/CD pipeline configuration. Moderate DevOps complexity."
+		},
+		{
+			"taskId": 39,
+			"taskTitle": "Implement Rate Limiting and Anti-Detection Measures",
+			"complexityScore": 9,
+			"recommendedSubtasks": 0,
+			"expansionPrompt": "Detail token bucket math, stealth plugin configurations, and block detection heuristics.",
+			"reasoning": "Advanced anti-detection and rate limiting. Very high complexity due to evasion techniques."
+		},
+		{
+			"taskId": 40,
+			"taskTitle": "Production Hardening and Security Audit",
+			"complexityScore": 8,
+			"recommendedSubtasks": 0,
+			"expansionPrompt": "Document security checklist, penetration test scenarios, and compliance verification procedures.",
+			"reasoning": "Security hardening across entire system. High complexity requiring security expertise."
+		}
+	]
+}
