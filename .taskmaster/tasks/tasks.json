@@ -244,7 +244,7 @@
         "dependencies": [
           "1"
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -310,7 +310,8 @@
         ],
         "complexity": 4,
         "recommendedSubtasks": 0,
-        "expansionPrompt": "Document each error type's usage scenarios and create comprehensive error mapping from external APIs."
+        "expansionPrompt": "Document each error type's usage scenarios and create comprehensive error mapping from external APIs.",
+        "updatedAt": "2026-01-30T22:54:14.744Z"
       },
       {
         "id": "5",
@@ -322,7 +323,7 @@
         "dependencies": [
           "2"
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -388,7 +389,8 @@
         ],
         "complexity": 6,
         "recommendedSubtasks": 0,
-        "expansionPrompt": "Create detailed validation rules for edge cases, custom transformers, and comprehensive test coverage for each schema."
+        "expansionPrompt": "Create detailed validation rules for edge cases, custom transformers, and comprehensive test coverage for each schema.",
+        "updatedAt": "2026-01-30T23:02:01.448Z"
       },
       {
         "id": "6",
@@ -3121,9 +3123,9 @@
     ],
     "metadata": {
       "version": "1.0.0",
-      "lastModified": "2026-01-30T22:34:49.706Z",
+      "lastModified": "2026-01-30T23:02:01.449Z",
       "taskCount": 40,
-      "completedCount": 3,
+      "completedCount": 5,
       "tags": [
         "master"
       ]
