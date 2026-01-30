@@ -14,6 +14,8 @@ export const PainPointTypeSchema = z.enum([
   "LARGE_IMAGES",
   "NO_HTTPS",
   "RENDER_BLOCKING",
+  "LAYOUT_SHIFT",
+  "CODE_BLOAT",
 ]);
 
 export type PainPointType = z.infer<typeof PainPointTypeSchema>;

@@ -1098,7 +1098,7 @@
         "dependencies": [
           "6"
         ],
-        "status": "in-progress",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -1164,7 +1164,7 @@
         "complexity": 9,
         "recommendedSubtasks": 0,
         "expansionPrompt": "Detail network interception patterns, scroll detection algorithms, and JSON response parsing selectors.",
-        "updatedAt": "2026-01-30T23:22:58.664Z"
+        "updatedAt": "2026-01-30T23:27:21.526Z"
       },
       {
         "id": "16",
@@ -1418,7 +1418,7 @@
         "dependencies": [
           "6"
         ],
-        "status": "pending",
+        "status": "in-progress",
         "subtasks": [
           {
             "id": 1,
@@ -1487,7 +1487,8 @@
         ],
         "complexity": 8,
         "recommendedSubtasks": 0,
-        "expansionPrompt": "Configure Lighthouse CDP categories, coverage collection timing, and performance score calculation weights."
+        "expansionPrompt": "Configure Lighthouse CDP categories, coverage collection timing, and performance score calculation weights.",
+        "updatedAt": "2026-01-30T23:27:32.338Z"
       },
       {
         "id": "20",
@@ -3126,9 +3127,9 @@
     ],
     "metadata": {
       "version": "1.0.0",
-      "lastModified": "2026-01-30T23:22:58.664Z",
+      "lastModified": "2026-01-30T23:27:32.338Z",
       "taskCount": 40,
-      "completedCount": 7,
+      "completedCount": 8,
       "tags": [
         "master"
       ]

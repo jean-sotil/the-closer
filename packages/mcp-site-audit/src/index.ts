@@ -30,3 +30,16 @@ export {
   type ManagedPage,
   type ManagedContext,
 } from "./browser/index.js";
+
+// Performance analysis
+export {
+  PerformanceAnalyzer,
+  type AnalysisOptions,
+  type CoreWebVitals,
+  type CoverageMetrics,
+  type ResourceMetrics,
+  type PerformancePainPoint,
+  type PerformanceReport,
+  AnalysisOptionsSchema,
+  PERFORMANCE_THRESHOLDS,
+} from "./audit-engine/index.js";
