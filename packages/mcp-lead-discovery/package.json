@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@the-closer/shared": "workspace:*",
+    "@the-closer/mcp-site-audit": "workspace:*",
     "@anthropic-ai/sdk": "^0.32.1",
     "@modelcontextprotocol/sdk": "^1.0.0",
     "puppeteer": "^23.11.0",

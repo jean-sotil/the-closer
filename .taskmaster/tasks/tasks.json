@@ -403,7 +403,7 @@
           "3",
           "4"
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -466,7 +466,8 @@
         ],
         "complexity": 8,
         "recommendedSubtasks": 0,
-        "expansionPrompt": "Detail MCP protocol integration, connection lifecycle management, and stealth plugin configuration specifics."
+        "expansionPrompt": "Detail MCP protocol integration, connection lifecycle management, and stealth plugin configuration specifics.",
+        "updatedAt": "2026-01-30T23:22:41.419Z"
       },
       {
         "id": "7",
@@ -1097,7 +1098,7 @@
         "dependencies": [
           "6"
         ],
-        "status": "pending",
+        "status": "in-progress",
         "subtasks": [
           {
             "id": 1,
@@ -1162,7 +1163,8 @@
         ],
         "complexity": 9,
         "recommendedSubtasks": 0,
-        "expansionPrompt": "Detail network interception patterns, scroll detection algorithms, and JSON response parsing selectors."
+        "expansionPrompt": "Detail network interception patterns, scroll detection algorithms, and JSON response parsing selectors.",
+        "updatedAt": "2026-01-30T23:22:58.664Z"
       },
       {
         "id": "16",
@@ -3124,9 +3126,9 @@
     ],
     "metadata": {
       "version": "1.0.0",
-      "lastModified": "2026-01-30T23:16:33.269Z",
+      "lastModified": "2026-01-30T23:22:58.664Z",
       "taskCount": 40,
-      "completedCount": 6,
+      "completedCount": 7,
       "tags": [
         "master"
       ]

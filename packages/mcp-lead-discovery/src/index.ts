@@ -8,4 +8,24 @@
  */
 
 export { LeadDiscoveryServer } from "./server.js";
-export type { DiscoveryQuery, DiscoveredBusiness } from "./types.js";
+export { MapsScraper } from "./maps-scraper.js";
+
+// Types
+export type {
+  DiscoveryQuery,
+  DiscoveredBusiness,
+  SearchCriteria,
+  RawBusinessEntity,
+  MapsScraperConfig,
+  StealthConfig,
+  ScraperResult,
+} from "./types.js";
+
+export {
+  DiscoveryQuerySchema,
+  DiscoveredBusinessSchema,
+  SearchCriteriaSchema,
+  RawBusinessEntitySchema,
+  MapsScraperConfigSchema,
+  StealthConfigSchema,
+} from "./types.js";
