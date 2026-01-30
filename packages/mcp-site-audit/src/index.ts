@@ -12,3 +12,21 @@
 
 export { SiteAuditServer } from "./server.js";
 export type { AuditConfig, AuditResult } from "./types.js";
+
+// Browser client and utilities
+export {
+  PuppeteerClient,
+  BrowserPool,
+  applyStealthEvasions,
+  getDefaultStealthOptions,
+  type BrowserOptions,
+  type ContextOptions,
+  type NavigationOptions,
+  type ScreenshotOptions,
+  type BrowserPoolConfig,
+  type StealthOptions,
+  type ConnectionState,
+  type BrowserMetrics,
+  type ManagedPage,
+  type ManagedContext,
+} from "./browser/index.js";

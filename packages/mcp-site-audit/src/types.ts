@@ -36,4 +36,4 @@ export const AuditConfigSchema = z.object({
   timeout: z.number().int().positive().default(30000),
 });
 
-export type AuditConfig = z.infer<typeof AuditConfigSchema>;
+export type AuditConfig = z.output<typeof AuditConfigSchema>;
