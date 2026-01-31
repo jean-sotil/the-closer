@@ -10,6 +10,22 @@
 export { LeadDiscoveryServer } from "./server.js";
 export { MapsScraper } from "./maps-scraper.js";
 export { DataExtractor } from "./data-extractor.js";
+export {
+  ProspectQualifier,
+  DEFAULT_QUALIFICATION_RULES,
+} from "./qualifier.js";
+
+// Qualifier types
+export type {
+  QualificationRules,
+  QualificationResult,
+  QualificationReasonDetail,
+  QualificationReason,
+  DisqualificationReason,
+  BatchQualificationSummary,
+} from "./qualifier.js";
+
+export { QualificationRulesSchema } from "./qualifier.js";
 
 // Data extractor types
 export type {
