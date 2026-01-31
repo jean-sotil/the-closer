@@ -9,6 +9,17 @@
 
 export { LeadDiscoveryServer } from "./server.js";
 export { MapsScraper } from "./maps-scraper.js";
+export { DataExtractor } from "./data-extractor.js";
+
+// Data extractor types
+export type {
+  ValidationResult,
+  ValidationError,
+  ValidationWarning,
+  BatchExtractionResult,
+  FailedExtraction,
+  ExtractionOptions,
+} from "./data-extractor.js";
 
 // Types
 export type {
