@@ -51,3 +51,32 @@ export type {
   RateLimitStatus,
   MailgunErrorCodeType,
 } from "./mailgun/index.js";
+
+// Template engine exports
+export {
+  TemplateEngine,
+  DEFAULT_TEMPLATES,
+  DEFAULT_TEMPLATE_IDS,
+  INITIAL_OUTREACH_TEMPLATE,
+  FOLLOWUP_1_TEMPLATE,
+  FOLLOWUP_2_TEMPLATE,
+  getDefaultTemplate,
+  RenderedEmailSchema,
+  StoredTemplateSchema,
+  TemplateEngineConfigSchema,
+  TemplateEngineErrorCode,
+  getTopPainPoint,
+  formatLoadTime,
+  formatScore,
+} from "./template-engine/index.js";
+
+export type {
+  EmailContext,
+  TemplateVariables,
+  RenderedEmail,
+  StoredTemplate,
+  TemplateEngineConfig,
+  ToneSeverity,
+  ToneReplacements,
+  TemplateEngineErrorCodeType,
+} from "./template-engine/index.js";

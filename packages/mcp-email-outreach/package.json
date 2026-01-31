@@ -15,9 +15,10 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@the-closer/shared": "workspace:*",
     "@modelcontextprotocol/sdk": "^1.0.0",
+    "@the-closer/shared": "workspace:*",
     "form-data": "^4.0.1",
+    "handlebars": "^4.7.8",
     "mailgun.js": "^10.2.3",
     "zod": "^3.24.1"
   },
