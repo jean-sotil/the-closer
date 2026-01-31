@@ -17,6 +17,24 @@ export {
 } from "./status-tracker.js";
 export type { LeadQuery, LeadUpdateInput } from "./types.js";
 
+// Evidence storage
+export {
+  EvidenceStore,
+  EvidenceError,
+  EvidenceErrorCode,
+  EvidenceTypeSchema,
+  EVIDENCE_BUCKET,
+  MAX_FILE_SIZE,
+  SIGNED_URL_EXPIRY,
+  SUPPORTED_FORMATS,
+} from "./evidence-store.js";
+export type {
+  EvidenceType,
+  EvidenceUrl,
+  EvidenceFile,
+  EvidenceErrorCodeType,
+} from "./evidence-store.js";
+
 // Lead repository types
 export type {
   LeadFilters,
