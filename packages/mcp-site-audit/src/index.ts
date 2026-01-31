@@ -13,6 +13,17 @@
 export { SiteAuditServer } from "./server.js";
 export type { AuditConfig, AuditResult } from "./types.js";
 
+// Audit service (orchestrator)
+export {
+  AuditService,
+  type AuditOptions,
+  type BatchAuditOptions,
+  type BatchAuditProgress,
+  type BatchAuditResult,
+  type PartialAuditResult,
+  DEFAULT_AUDIT_OPTIONS,
+} from "./audit-engine/index.js";
+
 // Browser client and utilities
 export {
   PuppeteerClient,

@@ -1,3 +1,14 @@
+// Audit service (orchestrator)
+export {
+  AuditService,
+  type AuditOptions,
+  type BatchAuditOptions,
+  type BatchAuditProgress,
+  type BatchAuditResult,
+  type PartialAuditResult,
+  DEFAULT_AUDIT_OPTIONS,
+} from "./service.js";
+
 // Performance analyzer
 export { PerformanceAnalyzer } from "./performance.js";
 
