@@ -32,3 +32,22 @@ export {
   getRulesForLevel,
   SEVERITY_WEIGHTS,
 } from "./accessibility-types.js";
+
+// Evidence capture
+export { EvidenceCapture } from "./evidence.js";
+
+// Evidence types
+export {
+  type ViewportConfig,
+  type EvidenceScreenshotOptions,
+  type IssueLocation,
+  type AnnotationOptions,
+  type VideoRecordingOptions,
+  type EvidenceCaptureResult,
+  type TracingResult,
+  ViewportConfigSchema,
+  EvidenceScreenshotOptionsSchema,
+  AnnotationOptionsSchema,
+  VideoRecordingOptionsSchema,
+  VIEWPORTS,
+} from "./evidence-types.js";

@@ -1500,7 +1500,7 @@
         "dependencies": [
           "6"
         ],
-        "status": "in-progress",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -1564,7 +1564,7 @@
         "complexity": 9,
         "recommendedSubtasks": 0,
         "expansionPrompt": "Define accessibility tree traversal algorithms, WCAG rule mappings, and severity scoring formulas.",
-        "updatedAt": "2026-01-30T23:33:34.640Z"
+        "updatedAt": "2026-01-31T04:11:45.066Z"
       },
       {
         "id": "21",
@@ -1576,7 +1576,7 @@
         "dependencies": [
           "6"
         ],
-        "status": "pending",
+        "status": "in-progress",
         "subtasks": [
           {
             "id": 1,
@@ -1641,7 +1641,8 @@
         ],
         "complexity": 7,
         "recommendedSubtasks": 0,
-        "expansionPrompt": "Specify canvas annotation algorithms, video frame extraction timing, and format conversion logic."
+        "expansionPrompt": "Specify canvas annotation algorithms, video frame extraction timing, and format conversion logic.",
+        "updatedAt": "2026-01-31T04:11:55.522Z"
       },
       {
         "id": "22",
@@ -3128,9 +3129,9 @@
     ],
     "metadata": {
       "version": "1.0.0",
-      "lastModified": "2026-01-30T23:33:34.640Z",
+      "lastModified": "2026-01-31T04:11:55.522Z",
       "taskCount": 40,
-      "completedCount": 9,
+      "completedCount": 10,
       "tags": [
         "master"
       ]
