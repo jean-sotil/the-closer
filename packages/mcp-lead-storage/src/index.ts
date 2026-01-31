@@ -8,7 +8,18 @@
  */
 
 export { LeadStorageServer } from "./server.js";
+export { LeadRepository } from "./lead-repository.js";
 export type { LeadQuery, LeadUpdateInput } from "./types.js";
+
+// Lead repository types
+export type {
+  LeadFilters,
+  PaginationOptions,
+  SortOptions,
+  PaginatedResult,
+  BatchUpdateItem,
+  LeadInput,
+} from "./lead-repository.js";
 
 // Supabase client
 export {
