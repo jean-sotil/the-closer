@@ -7,5 +7,47 @@
  * with personalized templates based on audit data.
  */
 
+// Server exports
 export { EmailOutreachServer } from "./server.js";
 export type { EmailTemplate, SendEmailRequest } from "./types.js";
+
+// Mailgun client exports
+export {
+  MailgunClient,
+  MailgunError,
+  mapMailgunApiError,
+  isMailgunError,
+  isRetryableError,
+  MailgunClientConfigSchema,
+  EmailOptionsSchema,
+  SendResultSchema,
+  RecipientSchema,
+  BulkEmailOptionsSchema,
+  BulkSendResultSchema,
+  TemplateSchema,
+  TrackingOptionsSchema,
+  MessageEventSchema,
+  MessageEventTypeSchema,
+  MessageStatusSchema,
+  WebhookEventSchema,
+  RateLimitStatusSchema,
+  MailgunErrorCode,
+  TEMPLATE_VARIABLE_PATTERN,
+} from "./mailgun/index.js";
+
+export type {
+  MailgunClientConfig,
+  EmailOptions,
+  SendResult,
+  Recipient,
+  BulkEmailOptions,
+  BulkSendResult,
+  Template,
+  TrackingOptions,
+  MessageEvent,
+  MessageEventType,
+  MessageStatus,
+  WebhookEvent,
+  RateLimitStatus,
+  MailgunErrorCodeType,
+} from "./mailgun/index.js";
