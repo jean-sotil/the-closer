@@ -1418,7 +1418,7 @@
         "dependencies": [
           "6"
         ],
-        "status": "in-progress",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -1488,7 +1488,7 @@
         "complexity": 8,
         "recommendedSubtasks": 0,
         "expansionPrompt": "Configure Lighthouse CDP categories, coverage collection timing, and performance score calculation weights.",
-        "updatedAt": "2026-01-30T23:27:32.338Z"
+        "updatedAt": "2026-01-30T23:33:25.110Z"
       },
       {
         "id": "20",
@@ -1500,7 +1500,7 @@
         "dependencies": [
           "6"
         ],
-        "status": "pending",
+        "status": "in-progress",
         "subtasks": [
           {
             "id": 1,
@@ -1563,7 +1563,8 @@
         ],
         "complexity": 9,
         "recommendedSubtasks": 0,
-        "expansionPrompt": "Define accessibility tree traversal algorithms, WCAG rule mappings, and severity scoring formulas."
+        "expansionPrompt": "Define accessibility tree traversal algorithms, WCAG rule mappings, and severity scoring formulas.",
+        "updatedAt": "2026-01-30T23:33:34.640Z"
       },
       {
         "id": "21",
@@ -3127,9 +3128,9 @@
     ],
     "metadata": {
       "version": "1.0.0",
-      "lastModified": "2026-01-30T23:27:32.338Z",
+      "lastModified": "2026-01-30T23:33:34.640Z",
       "taskCount": 40,
-      "completedCount": 8,
+      "completedCount": 9,
       "tags": [
         "master"
       ]
