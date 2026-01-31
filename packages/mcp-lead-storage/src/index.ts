@@ -9,6 +9,12 @@
 
 export { LeadStorageServer } from "./server.js";
 export { LeadRepository } from "./lead-repository.js";
+export {
+  StatusTracker,
+  isValidTransition,
+  getAllowedTransitions,
+  isTerminalStatus,
+} from "./status-tracker.js";
 export type { LeadQuery, LeadUpdateInput } from "./types.js";
 
 // Lead repository types
@@ -20,6 +26,14 @@ export type {
   BatchUpdateItem,
   LeadInput,
 } from "./lead-repository.js";
+
+// Status tracker types
+export type {
+  StatusHistoryEntry,
+  StatusWebhookCallback,
+  StatusUpdateOptions,
+  BulkStatusUpdateResult,
+} from "./status-tracker.js";
 
 // Supabase client
 export {
