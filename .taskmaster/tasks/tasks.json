@@ -480,7 +480,7 @@
           "3",
           "4"
         ],
-        "status": "pending",
+        "status": "in-progress",
         "subtasks": [
           {
             "id": 1,
@@ -544,7 +544,8 @@
         ],
         "complexity": 8,
         "recommendedSubtasks": 0,
-        "expansionPrompt": "Specify PostgREST query building patterns, transaction isolation levels, and storage bucket permission handling."
+        "expansionPrompt": "Specify PostgREST query building patterns, transaction isolation levels, and storage bucket permission handling.",
+        "updatedAt": "2026-01-31T04:26:30.503Z"
       },
       {
         "id": "8",
@@ -1576,7 +1577,7 @@
         "dependencies": [
           "6"
         ],
-        "status": "in-progress",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -1642,7 +1643,7 @@
         "complexity": 7,
         "recommendedSubtasks": 0,
         "expansionPrompt": "Specify canvas annotation algorithms, video frame extraction timing, and format conversion logic.",
-        "updatedAt": "2026-01-31T04:11:55.522Z"
+        "updatedAt": "2026-01-31T04:14:47.253Z"
       },
       {
         "id": "22",
@@ -3129,9 +3130,9 @@
     ],
     "metadata": {
       "version": "1.0.0",
-      "lastModified": "2026-01-31T04:11:55.522Z",
+      "lastModified": "2026-01-31T04:26:30.503Z",
       "taskCount": 40,
-      "completedCount": 10,
+      "completedCount": 11,
       "tags": [
         "master"
       ]

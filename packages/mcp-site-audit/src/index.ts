@@ -43,3 +43,38 @@ export {
   AnalysisOptionsSchema,
   PERFORMANCE_THRESHOLDS,
 } from "./audit-engine/index.js";
+
+// Accessibility scanning
+export {
+  AccessibilityScanner,
+  type WCAGLevel,
+  type AccessibilityScanOptions,
+  type ViolationSeverity,
+  type WCAGViolation,
+  type WCAGRule,
+  type AccessibilityNode,
+  type LegalRiskAssessment,
+  type AccessibilityReport,
+  WCAGLevelSchema,
+  AccessibilityScanOptionsSchema,
+  WCAG_RULES,
+  getRulesForLevel,
+  SEVERITY_WEIGHTS,
+} from "./audit-engine/index.js";
+
+// Evidence capture
+export {
+  EvidenceCapture,
+  type ViewportConfig,
+  type EvidenceScreenshotOptions,
+  type IssueLocation,
+  type AnnotationOptions,
+  type VideoRecordingOptions,
+  type EvidenceCaptureResult,
+  type TracingResult,
+  ViewportConfigSchema,
+  EvidenceScreenshotOptionsSchema,
+  AnnotationOptionsSchema,
+  VideoRecordingOptionsSchema,
+  VIEWPORTS,
+} from "./audit-engine/index.js";

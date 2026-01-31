@@ -1,22 +1,16 @@
-#!/usr/bin/env node
+// Client
+export { SupabaseClient } from "./client.js";
 
-/**
- * MCP Lead Storage Server
- *
- * Handles all Supabase database operations for
- * lead profiles and campaign data.
- */
-
-export { LeadStorageServer } from "./server.js";
-export type { LeadQuery, LeadUpdateInput } from "./types.js";
-
-// Supabase client
+// Errors
 export {
-  SupabaseClient,
   SupabaseError,
   mapSupabaseError,
   isSupabaseError,
   isRetriableError,
+} from "./errors.js";
+
+// Types
+export {
   type SupabaseClientConfig,
   type FilterOperator,
   type FilterClause,
@@ -38,4 +32,4 @@ export {
   SupabaseClientConfigSchema,
   FilterOperatorSchema,
   SupabaseErrorCode,
-} from "./supabase/index.js";
+} from "./types.js";

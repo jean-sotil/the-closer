@@ -104,6 +104,9 @@ importers:
       '@modelcontextprotocol/sdk':
         specifier: ^1.0.0
         version: 1.25.3(hono@4.11.7)(zod@3.25.76)
+      '@the-closer/mcp-site-audit':
+        specifier: workspace:*
+        version: link:../mcp-site-audit
       '@the-closer/shared':
         specifier: workspace:*
         version: link:../shared
