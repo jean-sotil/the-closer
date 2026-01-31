@@ -1,14 +1,117 @@
 import { supabase } from "../contexts/AuthContext";
 import type { LeadProfile, ContactStatus } from "@the-closer/shared";
+import type { LeadFilterState, SortConfig, PaginationState } from "../components/leads/types";
+
+/**
+ * Paginated result type
+ */
+export interface PaginatedResult<T> {
+  data: T[];
+  total: number;
+  page: number;
+  pageSize: number;
+  hasMore: boolean;
+}
+
+/**
+ * Lead query parameters
+ */
+export interface LeadQueryParams {
+  filters?: Partial<LeadFilterState>;
+  sort?: SortConfig;
+  pagination?: Partial<PaginationState>;
+}
 
 /**
  * Lead API functions
  */
 export const leadsApi = {
   /**
-   * Fetch all leads with optional filters
+   * Fetch leads with filtering, sorting, and pagination
    */
-  async getLeads(filters?: {
+  async getLeads(params: LeadQueryParams = {}): Promise<PaginatedResult<LeadProfile>> {
+    const { filters = {}, sort, pagination = {} } = params;
+    const page = pagination.page ?? 1;
+    const pageSize = pagination.pageSize ?? 25;
+    const offset = (page - 1) * pageSize;
+
+    // Build the query
+    let query = supabase.from("lead_profiles").select("*", { count: "exact" });
+
+    // Apply search filter
+    if (filters.search) {
+      query = query.ilike("business_name", `%${filters.search}%`);
+    }
+
+    // Apply status filter
+    if (filters.status && filters.status.length > 0) {
+      query = query.in("contact_status", filters.status);
+    }
+
+    // Apply category filter
+    if (filters.categories && filters.categories.length > 0) {
+      query = query.in("business_category", filters.categories);
+    }
+
+    // Apply rating range filter
+    if (filters.ratingRange) {
+      const [minRating, maxRating] = filters.ratingRange;
+      if (minRating > 0) {
+        query = query.gte("rating", minRating);
+      }
+      if (maxRating < 5) {
+        query = query.lte("rating", maxRating);
+      }
+    }
+
+    // Apply date range filter
+    if (filters.dateRange?.start) {
+      query = query.gte("discovered_at", filters.dateRange.start);
+    }
+    if (filters.dateRange?.end) {
+      query = query.lte("discovered_at", filters.dateRange.end);
+    }
+
+    // Apply sorting
+    if (sort) {
+      // Map frontend field names to database column names
+      const fieldMap: Record<string, string> = {
+        businessName: "business_name",
+        businessCategory: "business_category",
+        contactStatus: "contact_status",
+        discoveredAt: "discovered_at",
+        lastContactedAt: "last_contacted_at",
+        rating: "rating",
+        performanceScore: "performance_score",
+        qualificationScore: "performance_score", // Use performance_score as proxy
+      };
+      const column = fieldMap[sort.field] ?? sort.field;
+      query = query.order(column, { ascending: sort.direction === "asc" });
+    } else {
+      // Default sort by discovered_at descending
+      query = query.order("discovered_at", { ascending: false });
+    }
+
+    // Apply pagination
+    query = query.range(offset, offset + pageSize - 1);
+
+    const { data, error, count } = await query;
+
+    if (error) throw error;
+
+    return {
+      data: (data ?? []) as LeadProfile[],
+      total: count ?? 0,
+      page,
+      pageSize,
+      hasMore: (count ?? 0) > offset + pageSize,
+    };
+  },
+
+  /**
+   * Fetch all leads without pagination (for legacy compatibility)
+   */
+  async getAllLeads(filters?: {
     status?: ContactStatus;
     limit?: number;
     offset?: number;
@@ -66,6 +169,50 @@ export const leadsApi = {
 
     if (error) throw error;
     return data as LeadProfile;
+  },
+
+  /**
+   * Bulk update leads status
+   */
+  async bulkUpdateStatus(ids: string[], status: ContactStatus): Promise<void> {
+    const { error } = await supabase
+      .from("lead_profiles")
+      .update({
+        contact_status: status,
+        updated_at: new Date().toISOString(),
+      })
+      .in("id", ids);
+
+    if (error) throw error;
+  },
+
+  /**
+   * Bulk delete leads
+   */
+  async bulkDelete(ids: string[]): Promise<void> {
+    const { error } = await supabase.from("lead_profiles").delete().in("id", ids);
+
+    if (error) throw error;
+  },
+
+  /**
+   * Get unique categories from leads
+   */
+  async getCategories(): Promise<string[]> {
+    const { data, error } = await supabase
+      .from("lead_profiles")
+      .select("business_category")
+      .not("business_category", "is", null);
+
+    if (error) throw error;
+
+    const categories = new Set<string>();
+    for (const row of data) {
+      if (row.business_category) {
+        categories.add(row.business_category);
+      }
+    }
+    return Array.from(categories).sort();
   },
 
   /**
