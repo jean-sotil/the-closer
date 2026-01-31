@@ -104,6 +104,25 @@ importers:
         specifier: ^6.0.5
         version: 6.4.1(@types/node@22.19.7)(jiti@1.21.7)(lightningcss@1.30.2)
 
+  packages/mcp-calendar:
+    dependencies:
+      '@modelcontextprotocol/sdk':
+        specifier: ^1.0.0
+        version: 1.25.3(hono@4.11.7)(zod@3.25.76)
+      '@the-closer/shared':
+        specifier: workspace:*
+        version: link:../shared
+      zod:
+        specifier: ^3.24.1
+        version: 3.25.76
+    devDependencies:
+      '@types/node':
+        specifier: ^22.10.0
+        version: 22.19.7
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+
   packages/mcp-email-outreach:
     dependencies:
       '@modelcontextprotocol/sdk':

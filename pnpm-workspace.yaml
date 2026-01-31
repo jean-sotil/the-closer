@@ -7,6 +7,7 @@ packages:
   - "packages/mcp-site-audit"
   - "packages/mcp-email-outreach"
   - "packages/mcp-lead-storage"
+  - "packages/mcp-calendar"
 
   # Shared utilities
   - "packages/shared"
