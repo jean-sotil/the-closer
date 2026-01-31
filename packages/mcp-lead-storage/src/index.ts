@@ -35,6 +35,25 @@ export type {
   EvidenceErrorCodeType,
 } from "./evidence-store.js";
 
+// Analytics
+export {
+  AnalyticsService,
+  DateRangeSchema,
+} from "./analytics.js";
+export type {
+  DateRange,
+  TimeInterval,
+  FunnelCounts,
+  ConversionRates,
+  FunnelMetrics,
+  CampaignMetrics,
+  OverallMetrics,
+  TimeSeriesData,
+  CategoryMetrics,
+  ScoreBucket,
+  ScoreDistribution,
+} from "./analytics.js";
+
 // Lead repository types
 export type {
   LeadFilters,
