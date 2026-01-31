@@ -17,6 +17,8 @@
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.0.0",
     "@the-closer/shared": "workspace:*",
+    "@the-closer/mcp-calendar": "workspace:*",
+    "@the-closer/mcp-lead-storage": "workspace:*",
     "form-data": "^4.0.1",
     "handlebars": "^4.7.8",
     "mailgun.js": "^10.2.3",

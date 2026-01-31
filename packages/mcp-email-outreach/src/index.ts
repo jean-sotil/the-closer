@@ -152,3 +152,23 @@ export type {
   LeadEmailContext,
   SendConditionResult,
 } from "./campaign-manager/index.js";
+
+// Calendar integration exports
+export {
+  CalendarIntegration,
+  CalendarIntegrationConfigSchema,
+} from "./calendar-integration/index.js";
+
+export type {
+  CalendarIntegrationConfig,
+  AvailabilitySlot,
+  BookingRequest,
+  BookingResult,
+  BookingLinkData,
+  CancellationResult,
+  ConfirmationEmailData,
+  TeamNotificationData,
+  CalendarEvent,
+  TimeSlot,
+  MeetingConfig,
+} from "./calendar-integration/index.js";
