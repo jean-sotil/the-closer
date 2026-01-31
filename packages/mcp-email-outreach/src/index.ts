@@ -80,3 +80,43 @@ export type {
   ToneReplacements,
   TemplateEngineErrorCodeType,
 } from "./template-engine/index.js";
+
+// Delivery tracker exports
+export {
+  DeliveryTracker,
+  EmailEventBaseSchema,
+  DeliveredEventSchema,
+  OpenedEventSchema,
+  ClickedEventSchema,
+  BouncedEventSchema,
+  ComplainedEventSchema,
+  UnsubscribedEventSchema,
+  FailedEventSchema,
+  RepliedEventSchema,
+  EmailMetricsSchema,
+  StoredEmailEventSchema,
+  DeliveryTrackerConfigSchema,
+  calculateRate,
+  hasBookingIntent,
+} from "./delivery-tracker/index.js";
+
+export type {
+  ILeadRepository,
+  IStatusTracker,
+  IEventStorage,
+  EmailEvent,
+  EmailEventBase,
+  EmailEventType,
+  DeliveredEvent,
+  OpenedEvent,
+  ClickedEvent,
+  BouncedEvent,
+  ComplainedEvent,
+  UnsubscribedEvent,
+  FailedEvent,
+  RepliedEvent,
+  EmailMetrics,
+  StoredEmailEvent,
+  DeliveryTrackerConfig,
+  WebhookProcessingResult,
+} from "./delivery-tracker/index.js";
