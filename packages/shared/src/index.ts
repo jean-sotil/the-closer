@@ -3,3 +3,4 @@ export * from "./utils/index.js";
 export * from "./config/index.js";
 export * from "./errors/index.js";
 export * from "./validation/index.js";
+export * from "./rate-limiting/index.js";
