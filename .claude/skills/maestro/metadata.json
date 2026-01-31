@@ -1,0 +1,11 @@
+{
+  "version": "1.0.0",
+  "organization": "Engineering",
+  "date": "January 2026",
+  "abstract": "Elite Software Architect skill for managing complex repositories. Orchestrates specialized sub-skills through a Plan-Act-Verify lifecycle while maintaining persistent project memory (Brain). Enforces a 'Why over How' philosophy for strategic decision-making.",
+  "references": [
+    "Claude Code Architecture Guidelines",
+    "Software Architecture Best Practices",
+    "Plan-Act-Verify Lifecycle Pattern"
+  ]
+}
