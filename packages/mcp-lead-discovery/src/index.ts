@@ -14,6 +14,22 @@ export {
   ProspectQualifier,
   DEFAULT_QUALIFICATION_RULES,
 } from "./qualifier.js";
+export {
+  LeadDiscoveryService,
+  createLeadDiscoveryService,
+} from "./discovery-service.js";
+
+// Discovery service types
+export type {
+  ILeadRepository,
+  LeadInput,
+  DiscoveryServiceConfig,
+  DiscoveryStage,
+  ProgressStatus,
+  DiscoveryResult,
+  DiscoveryError,
+  ProgressCallback,
+} from "./discovery-service.js";
 
 // Qualifier types
 export type {

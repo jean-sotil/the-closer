@@ -480,7 +480,7 @@
           "3",
           "4"
         ],
-        "status": "in-progress",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -545,7 +545,7 @@
         "complexity": 8,
         "recommendedSubtasks": 0,
         "expansionPrompt": "Specify PostgREST query building patterns, transaction isolation levels, and storage bucket permission handling.",
-        "updatedAt": "2026-01-31T04:26:30.503Z"
+        "updatedAt": "2026-01-31T04:30:53.759Z"
       },
       {
         "id": "8",
@@ -793,7 +793,7 @@
           "7",
           "10"
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -856,7 +856,8 @@
         ],
         "complexity": 7,
         "recommendedSubtasks": 0,
-        "expansionPrompt": "Detail query optimization strategies, transaction boundaries, and deduplication normalization logic."
+        "expansionPrompt": "Detail query optimization strategies, transaction boundaries, and deduplication normalization logic.",
+        "updatedAt": "2026-01-31T05:11:29.922Z"
       },
       {
         "id": "12",
@@ -868,7 +869,7 @@
         "dependencies": [
           "11"
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -933,7 +934,8 @@
         ],
         "complexity": 6,
         "recommendedSubtasks": 0,
-        "expansionPrompt": "Define complete state machine transitions, webhook callback registration patterns, and history query optimization."
+        "expansionPrompt": "Define complete state machine transitions, webhook callback registration patterns, and history query optimization.",
+        "updatedAt": "2026-01-31T05:13:09.824Z"
       },
       {
         "id": "13",
@@ -1178,7 +1180,7 @@
           "5",
           "15"
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -1246,7 +1248,8 @@
         ],
         "complexity": 5,
         "recommendedSubtasks": 0,
-        "expansionPrompt": "Create regex patterns for phone/address normalization, validation rule sets, and error categorization."
+        "expansionPrompt": "Create regex patterns for phone/address normalization, validation rule sets, and error categorization.",
+        "updatedAt": "2026-01-31T04:55:41.345Z"
       },
       {
         "id": "17",
@@ -1259,7 +1262,7 @@
           "5",
           "16"
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -1328,7 +1331,8 @@
         ],
         "complexity": 4,
         "recommendedSubtasks": 0,
-        "expansionPrompt": "Define scoring formula weights, configurable rule sets, and edge case handling for qualification logic."
+        "expansionPrompt": "Define scoring formula weights, configurable rule sets, and edge case handling for qualification logic.",
+        "updatedAt": "2026-01-31T04:56:54.410Z"
       },
       {
         "id": "18",
@@ -2977,7 +2981,7 @@
           "15",
           "19"
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -3045,7 +3049,8 @@
         ],
         "complexity": 9,
         "recommendedSubtasks": 0,
-        "expansionPrompt": "Detail token bucket math, stealth plugin configurations, and block detection heuristics."
+        "expansionPrompt": "Detail token bucket math, stealth plugin configurations, and block detection heuristics.",
+        "updatedAt": "2026-01-31T05:04:23.883Z"
       },
       {
         "id": "40",
@@ -3130,9 +3135,9 @@
     ],
     "metadata": {
       "version": "1.0.0",
-      "lastModified": "2026-01-31T04:26:30.503Z",
+      "lastModified": "2026-01-31T05:13:09.824Z",
       "taskCount": 40,
-      "completedCount": 11,
+      "completedCount": 17,
       "tags": [
         "master"
       ]
