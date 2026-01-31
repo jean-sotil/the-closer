@@ -4,6 +4,9 @@ export { PerformanceAnalyzer } from "./performance.js";
 // Accessibility scanner
 export { AccessibilityScanner } from "./accessibility.js";
 
+// Responsiveness analyzer
+export { ResponsivenessAnalyzer } from "./responsive.js";
+
 // Performance types
 export {
   type AnalysisOptions,
@@ -51,3 +54,20 @@ export {
   VideoRecordingOptionsSchema,
   VIEWPORTS,
 } from "./evidence-types.js";
+
+// Responsiveness types
+export {
+  type ViewportBreakpoint,
+  type ResponsiveIssue,
+  type ResponsiveIssueType,
+  type ResponsiveIssueSeverity,
+  type ViewportMeasurements,
+  type ViewportScreenshots,
+  type ResponsivenessReport,
+  type ResponsivenessOptions,
+  type ElementDimensions,
+  VIEWPORT_BREAKPOINTS,
+  SEVERITY_WEIGHTS as RESPONSIVE_SEVERITY_WEIGHTS,
+  ResponsivenessOptionsSchema,
+  DEFAULT_RESPONSIVENESS_OPTIONS,
+} from "./responsive-types.js";
