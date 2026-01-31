@@ -101,8 +101,8 @@ export {
 } from "./delivery-tracker/index.js";
 
 export type {
-  ILeadRepository,
-  IStatusTracker,
+  ILeadRepository as IDeliveryLeadRepository,
+  IStatusTracker as IDeliveryStatusTracker,
   IEventStorage,
   EmailEvent,
   EmailEventBase,
@@ -120,3 +120,35 @@ export type {
   DeliveryTrackerConfig,
   WebhookProcessingResult,
 } from "./delivery-tracker/index.js";
+
+// Campaign manager exports
+export {
+  CampaignManager,
+  CampaignExecutionResultSchema,
+  ScheduledEmailStatusSchema,
+  ScheduledEmailSchema,
+  CampaignStateSchema,
+  LeadFilterCriteriaSchema,
+  CampaignManagerConfigSchema,
+  getTodayDateString,
+  calculateScheduledTime,
+  isWithinSendWindow,
+} from "./campaign-manager/index.js";
+
+export type {
+  ILeadRepository,
+  IStatusTracker,
+  ICampaignRepository,
+  IStorage,
+  IEmailEventStorage,
+  CampaignExecutionResult,
+  ScheduledEmail,
+  ScheduledEmailStatus,
+  CampaignState,
+  LeadFilterCriteria,
+  CampaignManagerConfig,
+  ScheduledEmailProcessingResult,
+  CampaignCreationResult,
+  LeadEmailContext,
+  SendConditionResult,
+} from "./campaign-manager/index.js";
