@@ -24,7 +24,7 @@
   },
   "dependencies": {
     "@headlessui/react": "^2.2.9",
-    "@supabase/supabase-js": "^2.93.3",
+    "@supabase/supabase-js": "^2.94.0",
     "@tanstack/react-query": "^5.90.20",
     "@the-closer/shared": "workspace:*",
     "cors": "^2.8.6",
