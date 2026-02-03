@@ -1,0 +1,15 @@
+# Auth state files (contain session tokens)
+.auth/
+
+# Test results
+test-results/
+playwright-report/
+
+# Screenshots (generated during tests)
+screenshots/
+
+# Videos (generated on failure)
+videos/
+
+# Traces
+traces/

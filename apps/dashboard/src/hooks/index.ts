@@ -1,5 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import type { LeadProfile, ContactStatus } from "@the-closer/shared";
+import type { LeadProfile, ContactStatus, CampaignStatus } from "@the-closer/shared";
 import { leadsApi, auditsApi, campaignsApi, type LeadQueryParams } from "../api";
 
 /**
@@ -128,6 +128,21 @@ export function useCampaigns() {
 }
 
 /**
+ * Hook for updating campaign status
+ */
+export function useUpdateCampaignStatus() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({ id, status }: { id: string; status: CampaignStatus }) =>
+      campaignsApi.updateCampaignStatus(id, status),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["campaigns"] });
+    },
+  });
+}
+
+/**
  * Combined hook for lead management state
  * Manages filters, sorting, pagination, and selection
  */
@@ -175,3 +190,22 @@ export function useLeadManagement(initialParams: LeadQueryParams = {}) {
 
 // Re-export auth hook
 export { useAuth } from "../contexts/AuthContext";
+
+// Re-export performance hooks
+export {
+  usePerformanceMetrics,
+  useRenderTime,
+  useDebouncedCallback,
+  useThrottledCallback,
+  useIntersectionObserver,
+  reportWebVitals,
+} from "./usePerformance";
+
+// Re-export resilient query hooks
+export {
+  useResilientQuery,
+  useResilientMutation,
+  useCircuitBreaker,
+  getAllCircuitBreakerStatuses,
+  resetAllCircuitBreakers,
+} from "./useResilientQuery";

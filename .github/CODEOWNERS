@@ -1,0 +1,21 @@
+# Code Owners for The Closer
+# These owners will be automatically requested for review
+
+# Default owners for everything in the repo
+* @jeanpaul
+
+# Dashboard specific
+/apps/dashboard/ @jeanpaul
+
+# MCP packages
+/packages/mcp-*/ @jeanpaul
+
+# Shared library
+/packages/shared/ @jeanpaul
+
+# CI/CD and infrastructure
+/.github/ @jeanpaul
+/supabase/ @jeanpaul
+
+# Documentation
+*.md @jeanpaul

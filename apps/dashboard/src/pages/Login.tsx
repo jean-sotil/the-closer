@@ -1,7 +1,9 @@
 import { useState, useCallback } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { LogIn, Mail, Lock, AlertCircle, Loader2 } from "lucide-react";
+import { LogIn, Mail, Lock, AlertCircle, Loader2, ShieldAlert } from "lucide-react";
 import { useAuth } from "../contexts/AuthContext";
+import { useAccountLockout } from "../hooks/useAccountLockout";
+import { getSafeErrorMessage, RateLimitError } from "../api/secureApi";
 
 export function Login(): JSX.Element {
   const navigate = useNavigate();
@@ -14,6 +16,9 @@ export function Login(): JSX.Element {
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
+  // Account lockout tracking
+  const lockout = useAccountLockout(email);
+
   // Get the redirect path from location state, default to home
   const from = (location.state as { from?: string })?.from ?? "/";
 
@@ -21,22 +26,42 @@ export function Login(): JSX.Element {
     async (e: React.FormEvent) => {
       e.preventDefault();
       setError(null);
+
+      // Check if account is locked
+      if (lockout.isLocked) {
+        const minutes = Math.ceil(lockout.remainingLockoutTime / 60);
+        setError(
+          `Account temporarily locked due to too many failed attempts. Try again in ${minutes} minute${minutes !== 1 ? 's' : ''}.`
+        );
+        return;
+      }
+
       setIsLoading(true);
 
       try {
         await signIn(email, password);
+        lockout.recordSuccessfulLogin();
         navigate(from, { replace: true });
       } catch (err) {
-        const message =
-          err instanceof Error
-            ? err.message
-            : "Failed to sign in. Please check your credentials.";
-        setError(message);
+        // Record failed attempt for lockout tracking
+        lockout.recordFailedAttempt();
+
+        // Show user-friendly error message
+        const message = getSafeErrorMessage(err);
+
+        // Add remaining attempts warning if not a rate limit error
+        if (!(err instanceof RateLimitError) && lockout.remainingAttempts > 0) {
+          setError(
+            `${message}\n\n${lockout.remainingAttempts} attempt${lockout.remainingAttempts !== 1 ? 's' : ''} remaining before account lockout.`
+          );
+        } else {
+          setError(message);
+        }
       } finally {
         setIsLoading(false);
       }
     },
-    [email, password, signIn, navigate, from]
+    [email, password, signIn, navigate, from, lockout]
   );
 
   return (
@@ -61,11 +86,22 @@ export function Login(): JSX.Element {
 
         {/* Form */}
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
+          {/* Account locked warning */}
+          {lockout.isLocked && (
+            <div className="flex items-center gap-2 p-4 bg-red-50 border border-red-200 rounded-lg text-red-700">
+              <ShieldAlert className="w-5 h-5 flex-shrink-0" />
+              <div className="text-sm">
+                <p className="font-semibold">Account Temporarily Locked</p>
+                <p>Too many failed login attempts. Try again in {Math.ceil(lockout.remainingLockoutTime / 60)} minute{Math.ceil(lockout.remainingLockoutTime / 60) !== 1 ? 's' : ''}.</p>
+              </div>
+            </div>
+          )}
+
           {/* Error message */}
-          {error && (
+          {error && !lockout.isLocked && (
             <div className="flex items-center gap-2 p-4 bg-red-50 border border-red-200 rounded-lg text-red-700">
               <AlertCircle className="w-5 h-5 flex-shrink-0" />
-              <p className="text-sm">{error}</p>
+              <p className="text-sm whitespace-pre-line">{error}</p>
             </div>
           )}
 
@@ -155,7 +191,7 @@ export function Login(): JSX.Element {
           {/* Submit button */}
           <button
             type="submit"
-            disabled={isLoading}
+            disabled={isLoading || lockout.isLocked}
             className="group relative w-full flex justify-center py-2.5 px-4 border border-transparent text-sm font-medium rounded-lg text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {isLoading ? (

@@ -6,11 +6,20 @@ import {
   type ReactNode,
 } from "react";
 import { createClient, type User, type Session } from "@supabase/supabase-js";
+import { validatePassword } from "../config/security";
+import { secureApiCall } from "../api/secureApi";
+import { RATE_LIMIT_CONFIG } from "../config/security";
 
 const supabaseUrl = import.meta.env["VITE_SUPABASE_URL"] ?? "";
 const supabaseAnonKey = import.meta.env["VITE_SUPABASE_ANON_KEY"] ?? "";
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
+  auth: {
+    persistSession: true,
+    autoRefreshToken: true,
+    detectSessionInUrl: true,
+  },
+});
 
 interface AuthContextValue {
   user: User | null;
@@ -52,19 +61,43 @@ export function AuthProvider({ children }: AuthProviderProps): JSX.Element {
   }, []);
 
   const signIn = async (email: string, password: string): Promise<void> => {
-    const { error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
-    if (error) throw error;
+    return secureApiCall(
+      `auth:signIn:${email}`,
+      async () => {
+        const { error } = await supabase.auth.signInWithPassword({
+          email,
+          password,
+        });
+        if (error) throw error;
+      },
+      {
+        maxRequests: RATE_LIMIT_CONFIG.auth.max,
+        windowMs: RATE_LIMIT_CONFIG.auth.windowMs,
+      }
+    );
   };
 
   const signUp = async (email: string, password: string): Promise<void> => {
-    const { error } = await supabase.auth.signUp({
-      email,
-      password,
-    });
-    if (error) throw error;
+    // Validate password strength before signup
+    const validation = validatePassword(password);
+    if (!validation.valid) {
+      throw new Error(`Password requirements not met:\n${validation.errors.join('\n')}`);
+    }
+
+    return secureApiCall(
+      `auth:signUp:${email}`,
+      async () => {
+        const { error } = await supabase.auth.signUp({
+          email,
+          password,
+        });
+        if (error) throw error;
+      },
+      {
+        maxRequests: RATE_LIMIT_CONFIG.auth.max,
+        windowMs: RATE_LIMIT_CONFIG.auth.windowMs,
+      }
+    );
   };
 
   const signOut = async (): Promise<void> => {

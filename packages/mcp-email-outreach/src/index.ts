@@ -172,3 +172,21 @@ export type {
   TimeSlot,
   MeetingConfig,
 } from "./calendar-integration/index.js";
+
+// Resilient email queue exports
+export {
+  ResilientEmailQueue,
+  InMemoryEmailQueueStorage,
+  EmailQueueEntrySchema,
+  EmailQueueConfigSchema,
+} from "./resilient-email/index.js";
+
+export type {
+  EmailQueueStorage,
+  EmailQueueEntry,
+  EmailQueueConfig,
+  EmailQueueStats,
+  EmailSendRequest,
+  BatchProcessResult,
+  EmailQueueStatus,
+} from "./resilient-email/index.js";

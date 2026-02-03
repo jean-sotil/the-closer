@@ -82,3 +82,13 @@ export {
   ResponsivenessOptionsSchema,
   DEFAULT_RESPONSIVENESS_OPTIONS,
 } from "./responsive-types.js";
+
+// Resilient audit service
+export {
+  ResilientAuditService,
+  isPartialResult,
+  type ResilientAuditConfig,
+  type ResilientAuditResult,
+  type ResilientBatchResult,
+  type PartialAuditResult as ResilientPartialAuditResult,
+} from "./resilient-audit.js";

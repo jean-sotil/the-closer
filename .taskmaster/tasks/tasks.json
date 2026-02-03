@@ -558,7 +558,7 @@
           "3",
           "4"
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -623,7 +623,8 @@
         ],
         "complexity": 7,
         "recommendedSubtasks": 0,
-        "expansionPrompt": "Detail Mailgun API rate limit handling, webhook signature verification algorithm, and batch recipient validation."
+        "expansionPrompt": "Detail Mailgun API rate limit handling, webhook signature verification algorithm, and batch recipient validation.",
+        "updatedAt": "2026-01-31T13:08:23.728Z"
       },
       {
         "id": "9",
@@ -636,7 +637,7 @@
           "3",
           "4"
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -703,7 +704,8 @@
         ],
         "complexity": 7,
         "recommendedSubtasks": 0,
-        "expansionPrompt": "Implement OAuth token refresh logic, timezone conversion utilities, and availability slot generation algorithm."
+        "expansionPrompt": "Implement OAuth token refresh logic, timezone conversion utilities, and availability slot generation algorithm.",
+        "updatedAt": "2026-01-31T14:06:01.309Z"
       },
       {
         "id": "10",
@@ -948,7 +950,7 @@
           "7",
           "10"
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -1011,7 +1013,8 @@
         ],
         "complexity": 6,
         "recommendedSubtasks": 0,
-        "expansionPrompt": "Specify file format validation regexes, signed URL expiration strategies, and orphaned file cleanup cron logic."
+        "expansionPrompt": "Specify file format validation regexes, signed URL expiration strategies, and orphaned file cleanup cron logic.",
+        "updatedAt": "2026-01-31T14:09:01.885Z"
       },
       {
         "id": "14",
@@ -1024,7 +1027,7 @@
           "11",
           "12"
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -1089,7 +1092,8 @@
         ],
         "complexity": 7,
         "recommendedSubtasks": 0,
-        "expansionPrompt": "Optimize SQL queries for funnel metrics, implement cache invalidation strategies, and detail time-series bucketing logic."
+        "expansionPrompt": "Optimize SQL queries for funnel metrics, implement cache invalidation strategies, and detail time-series bucketing logic.",
+        "updatedAt": "2026-01-31T15:24:08.130Z"
       },
       {
         "id": "15",
@@ -1347,7 +1351,7 @@
           "16",
           "17"
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -1411,7 +1415,8 @@
         ],
         "complexity": 7,
         "recommendedSubtasks": 0,
-        "expansionPrompt": "Implement pipeline error boundaries, progress reporting hooks, and partial result handling strategies."
+        "expansionPrompt": "Implement pipeline error boundaries, progress reporting hooks, and partial result handling strategies.",
+        "updatedAt": "2026-01-31T12:49:22.803Z"
       },
       {
         "id": "19",
@@ -1659,7 +1664,7 @@
         "dependencies": [
           "21"
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -1723,7 +1728,8 @@
         ],
         "complexity": 7,
         "recommendedSubtasks": 0,
-        "expansionPrompt": "Define viewport breakpoint logic, touch target measurement algorithms, and layout shift detection."
+        "expansionPrompt": "Define viewport breakpoint logic, touch target measurement algorithms, and layout shift detection.",
+        "updatedAt": "2026-01-31T12:52:31.192Z"
       },
       {
         "id": "23",
@@ -1740,7 +1746,7 @@
           "21",
           "22"
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -1808,7 +1814,8 @@
         ],
         "complexity": 8,
         "recommendedSubtasks": 0,
-        "expansionPrompt": "Detail audit orchestration sequence, partial result merging logic, and batch concurrency controls."
+        "expansionPrompt": "Detail audit orchestration sequence, partial result merging logic, and batch concurrency controls.",
+        "updatedAt": "2026-01-31T14:15:13.617Z"
       },
       {
         "id": "24",
@@ -1821,7 +1828,7 @@
           "5",
           "8"
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -1886,7 +1893,8 @@
         ],
         "complexity": 6,
         "recommendedSubtasks": 0,
-        "expansionPrompt": "Implement Handlebars helper functions, variable resolution precedence, and template validation rules."
+        "expansionPrompt": "Implement Handlebars helper functions, variable resolution precedence, and template validation rules.",
+        "updatedAt": "2026-01-31T13:13:14.534Z"
       },
       {
         "id": "25",
@@ -1901,7 +1909,7 @@
           "12",
           "24"
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -1964,7 +1972,8 @@
         ],
         "complexity": 9,
         "recommendedSubtasks": 0,
-        "expansionPrompt": "Define sequence state machine, condition evaluation logic, and capacity throttling algorithms."
+        "expansionPrompt": "Define sequence state machine, condition evaluation logic, and capacity throttling algorithms.",
+        "updatedAt": "2026-01-31T13:56:33.072Z"
       },
       {
         "id": "26",
@@ -1978,7 +1987,7 @@
           "11",
           "12"
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -2042,7 +2051,8 @@
         ],
         "complexity": 7,
         "recommendedSubtasks": 0,
-        "expansionPrompt": "Specify webhook signature verification, event routing patterns, and reply intent detection."
+        "expansionPrompt": "Specify webhook signature verification, event routing patterns, and reply intent detection.",
+        "updatedAt": "2026-01-31T13:17:17.596Z"
       },
       {
         "id": "27",
@@ -2055,7 +2065,7 @@
           "9",
           "11"
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -2120,7 +2130,8 @@
         ],
         "complexity": 7,
         "recommendedSubtasks": 0,
-        "expansionPrompt": "Implement availability slot generation algorithm, double-booking prevention, and timezone conversion."
+        "expansionPrompt": "Implement availability slot generation algorithm, double-booking prevention, and timezone conversion.",
+        "updatedAt": "2026-01-31T15:26:36.888Z"
       },
       {
         "id": "28",
@@ -2132,7 +2143,7 @@
         "dependencies": [
           "2"
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -2195,7 +2206,8 @@
         ],
         "complexity": 4,
         "recommendedSubtasks": 0,
-        "expansionPrompt": "Detail Vite configuration options, Tailwind theme customization, and React Query provider setup."
+        "expansionPrompt": "Detail Vite configuration options, Tailwind theme customization, and React Query provider setup.",
+        "updatedAt": "2026-01-31T12:59:44.927Z"
       },
       {
         "id": "29",
@@ -2208,7 +2220,7 @@
           "11",
           "28"
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -2271,7 +2283,8 @@
         ],
         "complexity": 7,
         "recommendedSubtasks": 0,
-        "expansionPrompt": "Implement table virtualization, filter state synchronization, and bulk action confirmation flows."
+        "expansionPrompt": "Implement table virtualization, filter state synchronization, and bulk action confirmation flows.",
+        "updatedAt": "2026-01-31T15:33:59.970Z"
       },
       {
         "id": "30",
@@ -2284,7 +2297,7 @@
           "23",
           "28"
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -2351,7 +2364,8 @@
         ],
         "complexity": 8,
         "recommendedSubtasks": 0,
-        "expansionPrompt": "Specify chart configurations, modal state management, PDF generation layout, and compare delta calculations."
+        "expansionPrompt": "Specify chart configurations, modal state management, PDF generation layout, and compare delta calculations.",
+        "updatedAt": "2026-02-02T00:28:49.206Z"
       },
       {
         "id": "31",
@@ -2365,7 +2379,7 @@
           "26",
           "28"
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -2429,7 +2443,8 @@
         ],
         "complexity": 8,
         "recommendedSubtasks": 0,
-        "expansionPrompt": "Detail real-time data synchronization, funnel visualization math, and responsive grid layouts."
+        "expansionPrompt": "Detail real-time data synchronization, funnel visualization math, and responsive grid layouts.",
+        "updatedAt": "2026-02-02T00:56:07.932Z"
       },
       {
         "id": "32",
@@ -2515,7 +2530,7 @@
           "7",
           "28"
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -2583,7 +2598,8 @@
         ],
         "complexity": 6,
         "recommendedSubtasks": 0,
-        "expansionPrompt": "Detail session persistence strategies, RLS policy definitions, and protected route patterns."
+        "expansionPrompt": "Detail session persistence strategies, RLS policy definitions, and protected route patterns.",
+        "updatedAt": "2026-02-02T00:31:38.935Z"
       },
       {
         "id": "34",
@@ -2601,7 +2617,7 @@
           "30",
           "31"
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -2669,7 +2685,8 @@
         ],
         "complexity": 9,
         "recommendedSubtasks": 0,
-        "expansionPrompt": "Create test data factories, mock external service scenarios, and visual regression baseline setup."
+        "expansionPrompt": "Create test data factories, mock external service scenarios, and visual regression baseline setup.",
+        "updatedAt": "2026-02-02T14:34:54.933Z"
       },
       {
         "id": "35",
@@ -2683,7 +2700,7 @@
           "23",
           "25"
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -2743,7 +2760,8 @@
         ],
         "complexity": 9,
         "recommendedSubtasks": 0,
-        "expansionPrompt": "Profile specific bottlenecks, implement caching layers, and define performance budgets with monitoring."
+        "expansionPrompt": "Profile specific bottlenecks, implement caching layers, and define performance budgets with monitoring.",
+        "updatedAt": "2026-02-02T14:46:59.220Z"
       },
       {
         "id": "36",
@@ -2758,17 +2776,18 @@
           "23",
           "25"
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
             "title": "Implement Core Retry Strategy with Exponential Backoff",
             "description": "Create a reusable retry utility that implements exponential backoff with jitter, configurable max attempts (default 3), and classification of retryable vs non-retryable errors.",
             "dependencies": [],
-            "details": "Develop a retryDecorator or retryAsync function in src/shared/utils/retry.ts. Support retryable errors: network, rate limit (429), timeout. Non-retryable: validation, auth (401/403), 4xx. Include jitter to avoid thundering herd. Log each retry attempt with context.",
-            "status": "pending",
+            "details": "Develop a retryDecorator or retryAsync function in src/shared/utils/retry.ts. Support retryable errors: network, rate limit (429), timeout. Non-retryable: validation, auth (401/403), 4xx. Include jitter to avoid thundering herd. Log each retry attempt with context.\n<info added on 2026-02-02T15:26:37.626Z>\nYes.\n\nImplementation completed in packages/shared/src/resilience/retry.ts with the following components: retryAsync function implementing exponential backoff with configurable jitter to prevent thundering herd, classifyError function for categorizing retryable errors (network failures, 429 rate limits, timeouts) versus non-retryable errors (validation, 401/403 auth, other 4xx status codes), calculateDelay function with configurable backoff multiplier for delay computation between retry attempts, makeRetryable wrapper function enabling retry logic on any async function, and withRetry decorator for applying retry behavior to class methods. All utilities exported through packages/shared/src/resilience/index.ts and packages/shared/src/index.ts for consumption across the application. Integrates with existing error classes from Task 4 (AppError, RateLimitError, etc.) for consistent error handling and classification.\n</info added on 2026-02-02T15:26:37.626Z>",
+            "status": "done",
             "testStrategy": "Unit tests for backoff calculations, jitter randomization, max attempts enforcement. Mock retryable/non-retryable errors. Integration tests with simulated network delays.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2026-02-02T15:21:09.531Z"
           },
           {
             "id": 2,
@@ -2778,9 +2797,10 @@
               1
             ],
             "details": "In scraper module, wrap API calls and page loads with retry strategy. Detect rate limit via status 429 or specific headers. On page load failure (timeout, blocked), log error, skip business, continue batch. Track skipped count in results.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Mock Puppeteer page failures, rate limit responses. Verify batch continues after individual failures. Test skip count accuracy and partial results.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2026-02-03T02:40:30.979Z"
           },
           {
             "id": 3,
@@ -2790,9 +2810,10 @@
               1
             ],
             "details": "Wrap audit site checks with 60s timeout per site. On timeout/blocked (no response, access denied), return partial audit data, set flag manualReview: true, score: null. Use structured error logging with site URL context.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Mock slow/blocked sites, verify 60s timeout triggers. Test partial results preserve successful data. Chaos tests with random site failures.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2026-02-03T02:42:16.071Z"
           },
           {
             "id": 4,
@@ -2802,9 +2823,10 @@
               1
             ],
             "details": "Create email retry queue in Supabase (table: failed_emails with retry_count, last_attempt, status). On Mailgun 5xx, queue for retry using exponential backoff. Daily cron job retries bounced/permanent failures up to max attempts.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Mock Mailgun API failures (5xx, bounces). Verify queue insertion, retry logic, daily cron execution. Test max retry exhaustion handling.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2026-02-03T02:44:10.839Z"
           },
           {
             "id": 5,
@@ -2815,15 +2837,17 @@
               3,
               4
             ],
-            "details": "Circuit breaker in src/shared/circuit-breaker.ts: open after 5 failures, half-open after 30s. Dashboard: show partial data/errors, fallback to cache on API fail. Structured logs with context (Sentry/structured-logger). Aggregate errors by type, alert >5% rate.",
-            "status": "pending",
+            "details": "Circuit breaker in src/shared/circuit-breaker.ts: open after 5 failures, half-open after 30s. Dashboard: show partial data/errors, fallback to cache on API fail. Structured logs with context (Sentry/structured-logger). Aggregate errors by type, alert >5% rate.\n<info added on 2026-02-02T15:26:51.919Z>\nImplemented: 1) Circuit breaker in packages/shared/src/resilience/circuit-breaker.ts with CircuitBreaker class (closed/open/half-open states), CircuitBreakerRegistry for managing multiple breakers. 2) Error reporter in error-reporter.ts with aggregation, fingerprinting, rate alerting. 3) Timeout utilities in timeout.ts with withTimeout, withDeadline, cancellableTimeout. 4) Frontend graceful degradation in apps/dashboard/src/hooks/useResilientQuery.ts (useResilientQuery, useResilientMutation hooks with circuit breaker). 5) ErrorBoundary component in apps/dashboard/src/components/ui/ErrorBoundary.tsx for UI error handling.\n</info added on 2026-02-02T15:26:51.919Z>",
+            "status": "done",
             "testStrategy": "Chaos testing: inject failures, verify circuit states transition correctly. UI E2E: test partial data display, cache fallback. Monitor error aggregation accuracy.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2026-02-02T15:21:09.748Z"
           }
         ],
         "complexity": 8,
         "recommendedSubtasks": 0,
-        "expansionPrompt": "Define retry classification rules, circuit breaker state transitions, and chaos testing scenarios."
+        "expansionPrompt": "Define retry classification rules, circuit breaker state transitions, and chaos testing scenarios.",
+        "updatedAt": "2026-02-03T02:44:10.839Z"
       },
       {
         "id": "37",
@@ -2908,7 +2932,7 @@
           "34",
           "35"
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -2968,7 +2992,8 @@
         ],
         "complexity": 7,
         "recommendedSubtasks": 0,
-        "expansionPrompt": "Configure matrix testing, artifact caching, and deployment approval gates."
+        "expansionPrompt": "Configure matrix testing, artifact caching, and deployment approval gates.",
+        "updatedAt": "2026-02-02T15:05:48.852Z"
       },
       {
         "id": "39",
@@ -3064,17 +3089,18 @@
           "36",
           "38"
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
             "title": "Implement API Security Measures",
             "description": "Apply rate limiting, input validation, SQL injection prevention, and XSS protection across all endpoints.",
             "dependencies": [],
-            "details": "Configure rate limiting using middleware like express-rate-limit. Implement Zod schemas for input validation on all user inputs. Ensure all database queries use parameterized queries with Supabase. Escape user-generated content in templates to prevent XSS.",
-            "status": "pending",
+            "details": "Configure rate limiting using middleware like express-rate-limit. Implement Zod schemas for input validation on all user inputs. Ensure all database queries use parameterized queries with Supabase. Escape user-generated content in templates to prevent XSS.\n<info added on 2026-02-03T03:15:34.194Z>\nSecurity audit findings: Completed codebase review. Found good practices: Zod validation, RLS enabled on all tables, Supabase auth, environment variable management. Critical gaps: No rate limiting, no CORS config, no security headers, no password strength enforcement, no CSRF protection, missing account lockout, no API input validation middleware, placeholder API keys in .mcp.json. Address gaps by: 1) Adding express-rate-limit middleware to app entry point; 2) Configuring CORS with allowed origins in Supabase integration; 3) Implementing helmet.js for security headers; 4) Extending Supabase auth with password strength Zod schema in login/signup; 5) Adding CSRF tokens via csurf middleware or Supabase session checks; 6) Implementing account lockout logic in AuthContext with failed attempt tracking; 7) Creating global Zod validation middleware for API routes; 8) Removing placeholder keys from .mcp.json and using env vars.\n</info added on 2026-02-03T03:15:34.194Z>",
+            "status": "in-progress",
             "testStrategy": "Unit tests for validation schemas. OWASP ZAP scan for injection/XSS vulnerabilities. Load test endpoints to verify rate limiting triggers RateLimitError.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2026-02-03T03:17:36.815Z"
           },
           {
             "id": 2,
@@ -3130,14 +3156,15 @@
         ],
         "complexity": 8,
         "recommendedSubtasks": 0,
-        "expansionPrompt": "Document security checklist, penetration test scenarios, and compliance verification procedures."
+        "expansionPrompt": "Document security checklist, penetration test scenarios, and compliance verification procedures.",
+        "updatedAt": "2026-02-03T04:24:21.221Z"
       }
     ],
     "metadata": {
       "version": "1.0.0",
-      "lastModified": "2026-01-31T05:13:09.824Z",
+      "lastModified": "2026-02-03T04:24:21.222Z",
       "taskCount": 40,
-      "completedCount": 17,
+      "completedCount": 38,
       "tags": [
         "master"
       ]

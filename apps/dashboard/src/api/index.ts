@@ -1,6 +1,8 @@
 import { supabase } from "../contexts/AuthContext";
-import type { LeadProfile, ContactStatus } from "@the-closer/shared";
+import type { LeadProfile, ContactStatus, CampaignConfig, CampaignStatus } from "@the-closer/shared";
 import type { LeadFilterState, SortConfig, PaginationState } from "../components/leads/types";
+import { secureApiCall, sanitizeObject } from "./secureApi";
+import { RATE_LIMIT_CONFIG } from "../config/security";
 
 /**
  * Paginated result type
@@ -30,10 +32,13 @@ export const leadsApi = {
    * Fetch leads with filtering, sorting, and pagination
    */
   async getLeads(params: LeadQueryParams = {}): Promise<PaginatedResult<LeadProfile>> {
-    const { filters = {}, sort, pagination = {} } = params;
-    const page = pagination.page ?? 1;
-    const pageSize = pagination.pageSize ?? 25;
-    const offset = (page - 1) * pageSize;
+    return secureApiCall(
+      'leads:getLeads',
+      async () => {
+        const { filters = {}, sort, pagination = {} } = params;
+        const page = pagination.page ?? 1;
+        const pageSize = pagination.pageSize ?? 25;
+        const offset = (page - 1) * pageSize;
 
     // Build the query
     let query = supabase.from("lead_profiles").select("*", { count: "exact" });
@@ -95,17 +100,23 @@ export const leadsApi = {
     // Apply pagination
     query = query.range(offset, offset + pageSize - 1);
 
-    const { data, error, count } = await query;
+        const { data, error, count } = await query;
 
-    if (error) throw error;
+        if (error) throw error;
 
-    return {
-      data: (data ?? []) as LeadProfile[],
-      total: count ?? 0,
-      page,
-      pageSize,
-      hasMore: (count ?? 0) > offset + pageSize,
-    };
+        return {
+          data: (data ?? []) as LeadProfile[],
+          total: count ?? 0,
+          page,
+          pageSize,
+          hasMore: (count ?? 0) > offset + pageSize,
+        };
+      },
+      {
+        maxRequests: RATE_LIMIT_CONFIG.api.max,
+        windowMs: RATE_LIMIT_CONFIG.api.windowMs,
+      }
+    );
   },
 
   /**
@@ -160,30 +171,47 @@ export const leadsApi = {
    * Update a lead
    */
   async updateLead(id: string, updates: Partial<LeadProfile>): Promise<LeadProfile> {
-    const { data, error } = await supabase
-      .from("lead_profiles")
-      .update({ ...updates, updated_at: new Date().toISOString() })
-      .eq("id", id)
-      .select()
-      .single();
+    return secureApiCall(
+      `leads:updateLead:${id}`,
+      async () => {
+        // Sanitize input to prevent XSS
+        const sanitizedUpdates = sanitizeObject(updates);
 
-    if (error) throw error;
-    return data as LeadProfile;
+        const { data, error } = await supabase
+          .from("lead_profiles")
+          .update({ ...sanitizedUpdates, updated_at: new Date().toISOString() })
+          .eq("id", id)
+          .select()
+          .single();
+
+        if (error) throw error;
+        return data as LeadProfile;
+      }
+    );
   },
 
   /**
    * Bulk update leads status
    */
   async bulkUpdateStatus(ids: string[], status: ContactStatus): Promise<void> {
-    const { error } = await supabase
-      .from("lead_profiles")
-      .update({
-        contact_status: status,
-        updated_at: new Date().toISOString(),
-      })
-      .in("id", ids);
+    return secureApiCall(
+      'leads:bulkUpdateStatus',
+      async () => {
+        const { error } = await supabase
+          .from("lead_profiles")
+          .update({
+            contact_status: status,
+            updated_at: new Date().toISOString(),
+          })
+          .in("id", ids);
 
-    if (error) throw error;
+        if (error) throw error;
+      },
+      {
+        maxRequests: 20, // More restrictive for bulk operations
+        windowMs: RATE_LIMIT_CONFIG.api.windowMs,
+      }
+    );
   },
 
   /**
@@ -265,13 +293,33 @@ export const campaignsApi = {
   /**
    * Fetch all campaigns
    */
-  async getCampaigns(): Promise<unknown[]> {
+  async getCampaigns(): Promise<CampaignConfig[]> {
     const { data, error } = await supabase
       .from("campaigns")
       .select("*")
       .order("created_at", { ascending: false });
 
     if (error) throw error;
-    return data;
+    return (data ?? []) as CampaignConfig[];
+  },
+
+  /**
+   * Update campaign status
+   */
+  async updateCampaignStatus(id: string, status: CampaignStatus): Promise<CampaignConfig> {
+    const { data, error } = await supabase
+      .from("campaigns")
+      .update({
+        status,
+        updated_at: new Date().toISOString(),
+        ...(status === "active" ? { started_at: new Date().toISOString() } : {}),
+        ...(status === "completed" ? { completed_at: new Date().toISOString() } : {}),
+      })
+      .eq("id", id)
+      .select()
+      .single();
+
+    if (error) throw error;
+    return data as CampaignConfig;
   },
 };

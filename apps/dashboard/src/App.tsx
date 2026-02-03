@@ -1,3 +1,4 @@
+import { lazy, Suspense } from "react";
 import { BrowserRouter, Routes, Route, NavLink } from "react-router-dom";
 import {
   Search,
@@ -7,14 +8,31 @@ import {
   Settings as SettingsIcon,
 } from "lucide-react";
 
-import { Discovery } from "./pages/Discovery";
-import { Audits } from "./pages/Audits";
-import { Outreach } from "./pages/Outreach";
-import { Leads } from "./pages/Leads";
-import { Settings } from "./pages/Settings";
-import { Login } from "./pages/Login";
-import { Signup } from "./pages/Signup";
 import { ProtectedRoute, UserMenu } from "./components/auth";
+import { LoadingFallback, PageLoader } from "./components/ui";
+
+// Lazy load page components for code splitting
+const Discovery = lazy(() =>
+  import("./pages/Discovery").then((m) => ({ default: m.Discovery }))
+);
+const Leads = lazy(() =>
+  import("./pages/Leads").then((m) => ({ default: m.Leads }))
+);
+const Audits = lazy(() =>
+  import("./pages/Audits").then((m) => ({ default: m.Audits }))
+);
+const Outreach = lazy(() =>
+  import("./pages/Outreach").then((m) => ({ default: m.Outreach }))
+);
+const Settings = lazy(() =>
+  import("./pages/Settings").then((m) => ({ default: m.Settings }))
+);
+const Login = lazy(() =>
+  import("./pages/Login").then((m) => ({ default: m.Login }))
+);
+const Signup = lazy(() =>
+  import("./pages/Signup").then((m) => ({ default: m.Signup }))
+);
 
 const navItems = [
   { path: "/", label: "Discovery", icon: Search },
@@ -85,29 +103,33 @@ function AppLayout({ children }: { children: React.ReactNode }): React.ReactElem
 export function App(): React.ReactElement {
   return (
     <BrowserRouter>
-      <Routes>
-        {/* Public routes */}
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
+      <Suspense fallback={<PageLoader />}>
+        <Routes>
+          {/* Public routes */}
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
 
-        {/* Protected routes */}
-        <Route
-          path="/*"
-          element={
-            <ProtectedRoute>
-              <AppLayout>
-                <Routes>
-                  <Route path="/" element={<Discovery />} />
-                  <Route path="/leads" element={<Leads />} />
-                  <Route path="/audits" element={<Audits />} />
-                  <Route path="/outreach" element={<Outreach />} />
-                  <Route path="/settings" element={<Settings />} />
-                </Routes>
-              </AppLayout>
-            </ProtectedRoute>
-          }
-        />
-      </Routes>
+          {/* Protected routes */}
+          <Route
+            path="/*"
+            element={
+              <ProtectedRoute>
+                <AppLayout>
+                  <Suspense fallback={<LoadingFallback message="Loading page..." />}>
+                    <Routes>
+                      <Route path="/" element={<Discovery />} />
+                      <Route path="/leads" element={<Leads />} />
+                      <Route path="/audits" element={<Audits />} />
+                      <Route path="/outreach" element={<Outreach />} />
+                      <Route path="/settings" element={<Settings />} />
+                    </Routes>
+                  </Suspense>
+                </AppLayout>
+              </ProtectedRoute>
+            }
+          />
+        </Routes>
+      </Suspense>
     </BrowserRouter>
   );
 }

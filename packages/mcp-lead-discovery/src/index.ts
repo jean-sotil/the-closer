@@ -9,6 +9,7 @@
 
 export { LeadDiscoveryServer } from "./server.js";
 export { MapsScraper } from "./maps-scraper.js";
+export { ResilientMapsScraper, RateLimitError } from "./resilient-scraper.js";
 export { DataExtractor } from "./data-extractor.js";
 export {
   ProspectQualifier,
@@ -72,3 +73,9 @@ export {
   MapsScraperConfigSchema,
   StealthConfigSchema,
 } from "./types.js";
+
+// Resilient scraper types
+export type {
+  ResilientScraperConfig,
+  BatchSearchResult,
+} from "./resilient-scraper.js";

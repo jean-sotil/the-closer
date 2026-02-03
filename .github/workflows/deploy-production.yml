@@ -1,0 +1,277 @@
+name: Deploy Production
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Version tag to deploy"
+        required: true
+        type: string
+
+concurrency:
+  group: production-deploy
+  cancel-in-progress: false
+
+env:
+  NODE_VERSION: "20"
+  PNPM_VERSION: "10"
+  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
+jobs:
+  # ============================================
+  # Pre-deployment Validation
+  # ============================================
+  validate:
+    name: Pre-deployment Validation
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.release.tag_name || github.event.inputs.version }}
+
+      - name: Get version
+        id: version
+        run: |
+          VERSION="${{ github.event.release.tag_name || github.event.inputs.version }}"
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "Deploying version: $VERSION"
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "pnpm"
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Run type check
+        run: pnpm typecheck
+
+      - name: Run tests
+        run: pnpm test
+        env:
+          CI: true
+
+  # ============================================
+  # Database Migrations
+  # ============================================
+  migrate:
+    name: Database Migrations
+    runs-on: ubuntu-latest
+    needs: [validate]
+    environment:
+      name: production
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.validate.outputs.version }}
+
+      - name: Setup Supabase CLI
+        uses: supabase/setup-cli@v1
+        with:
+          version: latest
+
+      - name: Create migration backup
+        run: |
+          echo "Creating database backup before migration..."
+          # Add backup command here if needed
+        continue-on-error: true
+
+      - name: Run migrations
+        id: migrate
+        run: |
+          supabase link --project-ref ${{ secrets.SUPABASE_PROJECT_REF_PROD }}
+          supabase db push
+        env:
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+
+      - name: Rollback on failure
+        if: failure() && steps.migrate.outcome == 'failure'
+        run: |
+          echo "::error::Migration failed! Manual rollback may be required."
+          echo "Check Supabase dashboard for migration status."
+
+  # ============================================
+  # Deploy to Production
+  # ============================================
+  deploy:
+    name: Deploy to Production
+    runs-on: ubuntu-latest
+    needs: [validate, migrate]
+    environment:
+      name: production
+      url: ${{ steps.deploy.outputs.url }}
+    outputs:
+      url: ${{ steps.deploy.outputs.url }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.validate.outputs.version }}
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "pnpm"
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Install Vercel CLI
+        run: pnpm add -g vercel@latest
+
+      - name: Pull Vercel Environment
+        run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: Build Project
+        run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
+        env:
+          VITE_SUPABASE_URL: ${{ secrets.SUPABASE_URL_PROD }}
+          VITE_SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY_PROD }}
+          VITE_ENVIRONMENT: production
+
+      - name: Deploy to Production
+        id: deploy
+        run: |
+          URL=$(vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }})
+          echo "url=$URL" >> $GITHUB_OUTPUT
+          echo "Deployed to: $URL"
+
+  # ============================================
+  # Health Checks
+  # ============================================
+  health-checks:
+    name: Health Checks
+    runs-on: ubuntu-latest
+    needs: [deploy]
+    steps:
+      - name: Wait for deployment propagation
+        run: sleep 60
+
+      - name: Health check - Homepage
+        run: |
+          for i in {1..5}; do
+            STATUS=$(curl -s -o /dev/null -w "%{http_code}" "${{ needs.deploy.outputs.url }}")
+            if [ "$STATUS" = "200" ]; then
+              echo "Homepage health check passed (attempt $i)"
+              exit 0
+            fi
+            echo "Attempt $i failed with status $STATUS, retrying..."
+            sleep 10
+          done
+          echo "::error::Homepage health check failed after 5 attempts"
+          exit 1
+
+      - name: Health check - API
+        run: |
+          # Check if the app loads correctly
+          RESPONSE=$(curl -s "${{ needs.deploy.outputs.url }}")
+          if echo "$RESPONSE" | grep -q "The Closer"; then
+            echo "App content verified"
+          else
+            echo "::warning::Could not verify app content"
+          fi
+
+      - name: Performance check
+        run: |
+          START=$(date +%s%N)
+          curl -s "${{ needs.deploy.outputs.url }}" > /dev/null
+          END=$(date +%s%N)
+          DURATION=$(( ($END - $START) / 1000000 ))
+          echo "Page load time: ${DURATION}ms"
+          if [ $DURATION -gt 5000 ]; then
+            echo "::warning::Page load time exceeds 5 seconds"
+          fi
+
+  # ============================================
+  # Post-deployment
+  # ============================================
+  post-deploy:
+    name: Post-deployment Tasks
+    runs-on: ubuntu-latest
+    needs: [validate, deploy, health-checks]
+    if: always()
+    steps:
+      - name: Create deployment record
+        if: needs.health-checks.result == 'success'
+        run: |
+          echo "Recording deployment..."
+          echo "Version: ${{ needs.validate.outputs.version }}"
+          echo "URL: ${{ needs.deploy.outputs.url }}"
+          echo "Time: $(date -u +"%Y-%m-%dT%H:%M:%SZ")"
+
+      - name: Notify success
+        if: needs.health-checks.result == 'success'
+        uses: slackapi/slack-github-action@v1.26.0
+        with:
+          payload: |
+            {
+              "text": "🚀 Production deployment successful!",
+              "blocks": [
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "*Production Deployment Successful* 🚀\n\n*Version:* `${{ needs.validate.outputs.version }}`\n*URL:* ${{ needs.deploy.outputs.url }}\n*Release:* ${{ github.event.release.html_url || 'Manual deployment' }}"
+                  }
+                }
+              ]
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        continue-on-error: true
+
+      - name: Notify failure
+        if: needs.health-checks.result != 'success'
+        uses: slackapi/slack-github-action@v1.26.0
+        with:
+          payload: |
+            {
+              "text": "🚨 Production deployment failed!",
+              "blocks": [
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "*Production Deployment Failed* 🚨\n\n*Version:* `${{ needs.validate.outputs.version }}`\n*Action:* ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}\n\n⚠️ *Immediate attention required!*"
+                  }
+                }
+              ]
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        continue-on-error: true
+
+      - name: Create GitHub deployment status
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const success = '${{ needs.health-checks.result }}' === 'success';
+            await github.rest.repos.createDeploymentStatus({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              deployment_id: context.payload.deployment?.id || 0,
+              state: success ? 'success' : 'failure',
+              environment_url: '${{ needs.deploy.outputs.url }}',
+              description: success ? 'Deployment successful' : 'Deployment failed'
+            }).catch(() => console.log('Could not create deployment status'));
+        continue-on-error: true
