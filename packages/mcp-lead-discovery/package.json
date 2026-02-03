@@ -12,6 +12,7 @@
     "build": "tsc",
     "dev": "tsc --watch",
     "start": "node dist/index.js",
+    "server": "node dist/api-server.js",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
