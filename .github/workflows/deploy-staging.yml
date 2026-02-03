@@ -141,7 +141,7 @@ jobs:
     steps:
       - name: Notify on success
         if: needs.smoke-tests.result == 'success'
-        uses: slackapi/slack-github-action@v1.26.0
+        uses: slackapi/slack-github-action@v2.1.1
         with:
           payload: |
             {
@@ -162,7 +162,7 @@ jobs:
 
       - name: Notify on failure
         if: needs.smoke-tests.result != 'success'
-        uses: slackapi/slack-github-action@v1.26.0
+        uses: slackapi/slack-github-action@v2.1.1
         with:
           payload: |
             {
