@@ -15,7 +15,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@modelcontextprotocol/sdk": "^1.0.0",
+    "@modelcontextprotocol/sdk": "^1.26.0",
     "@the-closer/shared": "workspace:*",
     "@the-closer/mcp-calendar": "workspace:*",
     "@the-closer/mcp-lead-storage": "workspace:*",
